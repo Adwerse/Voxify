@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body {
+  @apply bg-white text-zinc-900;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  @apply font-heading font-light tracking-tight;
+}
+
+p,
+li,
+span,
+button,
+input,
+textarea,
+label {
+  @apply font-body font-normal;
+}
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(90deg, rgba(228, 228, 231, 0.7) 25%, rgba(244, 244, 245, 1) 50%, rgba(228, 228, 231, 0.7) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite linear;
+}
