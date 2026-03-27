@@ -1,0 +1,126 @@
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.headerCard {
+  border: 1px solid #d8dfec;
+  border-radius: 14px;
+  padding: 1.25rem;
+  background: #ffffff;
+}
+
+.eyebrow {
+  color: #48607d;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.6rem;
+  color: #18263a;
+}
+
+.description {
+  margin-top: 0.65rem;
+  color: #425369;
+  line-height: 1.5;
+}
+
+.listSection {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.consultationCard {
+  border: 1px solid #d8dfec;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 1.15rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+}
+
+.consultationTitle {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #17263c;
+}
+
+.consultationDescription {
+  margin-top: 0.35rem;
+  color: #4a5c76;
+}
+
+.statusTag {
+  height: fit-content;
+  padding: 0.24rem 0.58rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  background: #e8effc;
+  color: #1a4d99;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.45rem;
+  color: #24364f;
+  font-size: 0.94rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.secondaryAction {
+  border: 1px solid #c7d3e7;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f3553;
+  background: #f8fbff;
+}
+
+.disabledAction {
+  border: 1px dashed #cad4e6;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  color: #607089;
+  background: #fafcff;
+}
+
+.emptyCard {
+  border: 1px dashed #c8d4e8;
+  border-radius: 14px;
+  background: #fbfcff;
+  padding: 1.2rem;
+}
+
+.emptyTitle {
+  margin: 0;
+  color: #1f314a;
+}
+
+.emptyText {
+  margin-top: 0.45rem;
+  color: #4e6078;
+}

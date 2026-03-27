@@ -1,0 +1,172 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.headerCard,
+.sectionCard,
+.emptyState {
+  border: 1px solid #d8dfec;
+  border-radius: 14px;
+  background: #ffffff;
+  padding: 1.15rem;
+}
+
+.eyebrow {
+  color: #48607d;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+}
+
+.title {
+  margin: 0;
+  color: #18263a;
+  font-size: 1.5rem;
+}
+
+.description {
+  margin-top: 0.55rem;
+  color: #425369;
+  line-height: 1.5;
+}
+
+.topActions {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.backLink {
+  border: 1px solid #c7d3e7;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f3553;
+  background: #f8fbff;
+}
+
+.sectionTitle {
+  margin: 0 0 0.8rem;
+  color: #1b2330;
+  font-size: 1.15rem;
+}
+
+.subheading {
+  margin: 0 0 0.55rem;
+  color: #23364f;
+  font-size: 1rem;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #e2e8f2;
+  padding: 0.62rem;
+  color: #21354e;
+  font-size: 0.92rem;
+}
+
+.table th {
+  color: #30435e;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background: #f8fbff;
+}
+
+.conflictsGrid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.conflictCard {
+  border: 1px solid #dde4f0;
+  border-radius: 12px;
+  padding: 0.85rem;
+}
+
+.conflictTitle {
+  margin: 0;
+  font-size: 1rem;
+  color: #1f2f47;
+}
+
+.cluster {
+  margin-top: 0.7rem;
+}
+
+.clusterLabel {
+  margin: 0;
+  font-size: 0.92rem;
+  color: #344b68;
+}
+
+.quoteList {
+  margin: 0.45rem 0 0;
+  padding-left: 1.1rem;
+  color: #475a74;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.alertSection {
+  margin-top: 1rem;
+}
+
+.alertList {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  padding: 0;
+  margin: 0;
+}
+
+.alertItem {
+  border: 1px solid #f0d3a1;
+  border-radius: 10px;
+  background: #fff8ec;
+  padding: 0.7rem;
+  color: #543f22;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.narrativeSection {
+  margin-top: 1rem;
+  border: 1px solid #dce5f3;
+  border-radius: 12px;
+  padding: 0.8rem;
+  background: #f9fbff;
+}
+
+.narrative {
+  margin: 0;
+  color: #26374f;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.muted {
+  margin: 0;
+  color: #4d5f78;
+  line-height: 1.5;
+}

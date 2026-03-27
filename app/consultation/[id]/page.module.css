@@ -1,0 +1,98 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+}
+
+.card {
+  width: min(760px, 100%);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  padding: 1.5rem;
+  box-shadow: 0 20px 50px -28px rgba(15, 23, 42, 0.35);
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #475569;
+}
+
+.title {
+  margin: 0.45rem 0 0;
+  color: #0f172a;
+}
+
+.description {
+  margin: 0.75rem 0 0;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.metaRow {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 10px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+}
+
+.primaryButton {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.secondaryButton {
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
+
+.qrPanel {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e2e8f0;
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+}
+
+.qrImage {
+  width: 160px;
+  height: 160px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.qrCaption {
+  margin: 0;
+  color: #475569;
+  font-size: 0.9rem;
+}

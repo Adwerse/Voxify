@@ -1,0 +1,23 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid #d8dfec;
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 1rem;
+}
+
+.chartTitle {
+  font-size: 1rem;
+  margin: 0 0 0.8rem;
+  color: #1b2330;
+}
+
+.empty {
+  color: #526178;
+  font-size: 0.9rem;
+}

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "campus-wellbeing-spring-2026",
+    "title": "Campus Wellbeing and Support",
+    "description": "Share what would most improve wellbeing support for students this term.",
+    "status": "open",
+    "questions": [
+      "What is one change that would most improve your day-to-day wellbeing at campus?",
+      "What currently makes it difficult for you to access support?"
+    ],
+    "createdAt": "2026-03-01T08:00:00.000Z"
+  }
+]

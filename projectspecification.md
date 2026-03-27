@@ -6,18 +6,19 @@ Before writing, consolidate every distinct feature mentioned across all three so
 
 **From Bias Radar:** Participation counts by group, theme-level demographic breakdown, underrepresentation alerts, AI-generated equity narrative, limitation disclosures, no individual profiling.
 
-**From CivicLens draft:** Modular architecture, anonymised quotes, feedback loop to participants, technical stack, ethical framework table, "what's next" roadmap.
+**From Voxify draft:** Modular architecture, anonymised quotes, feedback loop to participants, technical stack, ethical framework table, "what's next" roadmap.
 
 **From the new summary:** QR-based micro-polls (no registration), Decision Impact Simulator, conflicting viewpoint detection, Missing Voices engine, sentiment evolution over time, closed-loop notifications when input leads to real decisions.
 
 ---
+
 ## Final Comprehensive Project Description
 
 ---
 
-# CivicLens: Youth Voice Aggregator
+# Voxify: Youth Voice Aggregator
 
-### *From student input to measurable, equitable, traceable impact*
+### _From student input to measurable, equitable, traceable impact_
 
 ---
 
@@ -32,7 +33,7 @@ Young people — university students and school pupils — are the demographic m
 
 The result is predictable: disengagement, cynicism, and a widening gap between the people making decisions and the people living with them.
 
-CivicLens is built to close that gap — not by collecting more voices, but by doing something meaningful with every voice collected.
+Voxify is built to close that gap — not by collecting more voices, but by doing something meaningful with every voice collected.
 
 ---
 
@@ -45,9 +46,9 @@ CivicLens is built to close that gap — not by collecting more voices, but by d
 
 ---
 
-## What CivicLens Does
+## What Voxify Does
 
-CivicLens is a lightweight web platform that turns student feedback into structured, equitable, and actionable intelligence — across four stages.
+Voxify is a lightweight web platform that turns student feedback into structured, equitable, and actionable intelligence — across four stages.
 
 ---
 
@@ -56,7 +57,7 @@ CivicLens is a lightweight web platform that turns student feedback into structu
 **QR-Based Micro-Polls**
 Students access a consultation in seconds by scanning a QR code — no account creation, no app download, no login. A single URL renders a mobile-optimised form with:
 
-- An issue-specific open question set by the organiser (e.g., *"What changes would most improve mental health support at this school?"*)
+- An issue-specific open question set by the organiser (e.g., _"What changes would most improve mental health support at this school?"_)
 - Optional nickname (no real names)
 - Age band (e.g., 16–17, 18–21, 22–25)
 - Self-described group (optional: e.g., commuter student, disability status, year of study, area of campus)
@@ -72,7 +73,7 @@ Every form opens with a plain-English consent statement explaining what is colle
 Raw responses feed into a multi-layer analysis pipeline.
 
 **AI Theme Clustering**
-An LLM processes all responses and groups them into thematic clusters (e.g., *Workload & Deadlines*, *Physical Environment*, *Social Inclusion*, *Transport Access*). Each cluster is labelled, sized by response volume, and ranked by frequency.
+An LLM processes all responses and groups them into thematic clusters (e.g., _Workload & Deadlines_, _Physical Environment_, _Social Inclusion_, _Transport Access_). Each cluster is labelled, sized by response volume, and ranked by frequency.
 
 **Dual-Audience Report Generation**
 The same underlying data is translated into two distinct outputs:
@@ -81,7 +82,7 @@ The same underlying data is translated into two distinct outputs:
 - **Council-Ready Briefing:** Structured, procedural language suitable for a staff meeting, board paper, or local authority submission. Includes theme titles, response volumes, representative quotes, identified trade-offs, and suggested next steps.
 
 **Conflicting Viewpoint Detection**
-CivicLens identifies where the student body is genuinely divided — not just where there is a majority view. For example, if responses on *canteen pricing* split between *"lower prices, even if quality drops"* and *"maintain quality, charge fairly"*, this tension is surfaced explicitly in both reports. Decision-makers see real trade-offs, not false consensus.
+Voxify identifies where the student body is genuinely divided — not just where there is a majority view. For example, if responses on _canteen pricing_ split between _"lower prices, even if quality drops"_ and _"maintain quality, charge fairly"_, this tension is surfaced explicitly in both reports. Decision-makers see real trade-offs, not false consensus.
 
 **Missing Voices Engine (Bias Radar)**
 This is the ethical backbone of the platform. After every consultation round, an automated representation audit runs:
@@ -89,7 +90,7 @@ This is the ethical backbone of the platform. After every consultation round, an
 - **Participation counts by group:** Who responded, broken down by age band and self-described group
 - **Theme-level representation:** For each AI-generated theme, what share of contributors came from each group? If one theme is dominated by a single demographic, it is flagged
 - **Underrepresentation alerts:** Groups present in the institution but absent or underrepresented in the response set are identified
-- **AI equity narrative:** A short, carefully worded plain-English explanation — e.g., *"Students aged 16–17 represent 40% of the school population but only 11% of responses in the 'outdoor spaces' theme. Consider targeted outreach to this group before acting on findings in this area."*
+- **AI equity narrative:** A short, carefully worded plain-English explanation — e.g., _"Students aged 16–17 represent 40% of the school population but only 11% of responses in the 'outdoor spaces' theme. Consider targeted outreach to this group before acting on findings in this area."_
 - **Limitation disclosures:** The tool explicitly states sample size, voluntary participation bias, and the recommended minimum threshold of responses before findings should be acted upon
 
 The Missing Voices Engine operates only on anonymised, aggregated group-level data. Individual responses cannot be linked to demographic tags under any circumstance.
@@ -99,21 +100,22 @@ The Missing Voices Engine operates only on anonymised, aggregated group-level da
 ### Stage 3 — Act: From Insight to Decision Support
 
 **Decision Impact Simulator**
-This is CivicLens's core innovation beyond standard feedback tools. Once themes and group data are established, organisers can model proposed actions before committing to them.
+This is Voxify's core innovation beyond standard feedback tools. Once themes and group data are established, organisers can model proposed actions before committing to them.
 
 The simulator works as follows:
-- The organiser inputs a proposed decision (e.g., *"Reduce canteen operating hours to cut costs"* or *"Introduce a new quiet study zone on the third floor"*)
+
+- The organiser inputs a proposed decision (e.g., _"Reduce canteen operating hours to cut costs"_ or _"Introduce a new quiet study zone on the third floor"_)
 - The system analyses which themes the decision addresses, which it does not, and which it may negatively affect
-- It generates a projected sentiment impact across demographic groups — e.g., *"This action addresses the top concern for 22–25-year-olds but does not address the primary concern of 16–18-year-olds, who prioritised outdoor space"*
+- It generates a projected sentiment impact across demographic groups — e.g., _"This action addresses the top concern for 22–25-year-olds but does not address the primary concern of 16–18-year-olds, who prioritised outdoor space"_
 - Trade-off framing is included: the output highlights what is being gained and what is being deprioritised, rather than presenting any action as universally positive
 
-This shifts CivicLens from a passive listening tool to an active decision-support system. Decision-makers go into policy conversations with a structured view of consequences, not just a list of complaints.
+This shifts Voxify from a passive listening tool to an active decision-support system. Decision-makers go into policy conversations with a structured view of consequences, not just a list of complaints.
 
 ---
 
 ### Stage 4 — Close the Loop: Trust Through Transparency
 
-Most consultation tools end at the report. CivicLens does not.
+Most consultation tools end at the report. Voxify does not.
 
 **Outcome Notifications**
 When an organiser marks a decision as taken — whether in response to the consultation or not — students who participated receive a notification (via the same QR/URL channel, or via the institution's existing communication platform). The notification states:
@@ -126,7 +128,7 @@ When an organiser marks a decision as taken — whether in response to the consu
 If input was not acted on, the notification explains why, with the organiser's stated reasoning.
 
 **Sentiment Evolution Timeline**
-Organisers can run the same question or topic across multiple time periods. CivicLens tracks how theme distribution and group representation shift between rounds — showing whether concerns are being resolved, whether new issues are emerging, and whether previously underrepresented groups are now participating more.
+Organisers can run the same question or topic across multiple time periods. Voxify tracks how theme distribution and group representation shift between rounds — showing whether concerns are being resolved, whether new issues are emerging, and whether previously underrepresented groups are now participating more.
 
 This is displayed as a timeline view in the dashboard, giving both students and decision-makers a longitudinal view of institutional responsiveness.
 
@@ -141,7 +143,7 @@ This is displayed as a timeline view in the dashboard, giving both students and 
 [Input Form — mobile-optimised, no auth required]
          |
          v
-[Response Store — lightweight JSON / in-memory for demo]
+[Response Store — flat JSON files for polls and surveys]
          |
          +──> [AI Theme Clustering — Claude API]
          |              |
@@ -168,14 +170,14 @@ This is displayed as a timeline view in the dashboard, giving both students and 
 
 **Stack**
 
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js (or single-page HTML/CSS/JS for demo) |
-| AI layer | Anthropic Claude API — claude-sonnet-4 |
-| Data store | In-memory / flat JSON (demo); PostgreSQL for production |
-| Charts | Chart.js or Recharts |
-| QR generation | qrcode.js (client-side, no dependency) |
-| Deployment | Vercel (demo) |
+| Layer         | Technology                                                    |
+| ------------- | ------------------------------------------------------------- |
+| Frontend      | Next.js (or single-page HTML/CSS/JS for demo)                 |
+| AI layer      | Anthropic Claude API — claude-sonnet-4                        |
+| Data store    | Flat JSON (polls/surveys) for demo; PostgreSQL for production |
+| Charts        | Chart.js or Recharts                                          |
+| QR generation | qrcode.js (client-side, no dependency)                        |
+| Deployment    | Vercel (demo)                                                 |
 
 **Demo Dataset**
 Pre-seeded with 50–60 synthetic responses across age bands and self-described groups to demonstrate the Missing Voices Engine and Decision Impact Simulator meaningfully, alongside a live QR input path for judges to add real responses during the presentation.
@@ -184,21 +186,21 @@ Pre-seeded with 50–60 synthetic responses across age bands and self-described 
 
 ## Ethical Framework
 
-Ethics in CivicLens is structural, not decorative.
+Ethics in Voxify is structural, not decorative.
 
-| Concern | How CivicLens Addresses It |
-|---|---|
-| Data minimisation | No names, emails, or device identifiers collected at any point |
-| Informed consent | Plain-English consent prompt on every form; purpose and retention period stated clearly |
-| Under-16 safeguarding | Parental or school authority consent required before deployment; no PII collected |
-| AI replacing human judgement | All AI outputs are labelled as AI-assisted; every report prompts human review before action |
-| Amplifying majority voices | Missing Voices Engine flags theme-level dominance before output is acted on |
-| Individual profiling | Group data is only shown in aggregate; demographic tags cannot be linked to individual responses |
-| Small sample bias | System discloses sample size on all outputs and warns when below a minimum reliable threshold |
-| Transparency of AI limits | All AI-generated narratives include a confidence caveat and encourage organiser verification |
-| Accountability | Decision Impact Simulator outputs are not prescriptive — they are framed as *considerations*, not recommendations |
+| Concern                      | How Voxify Addresses It                                                                                           |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Data minimisation            | No names, emails, or device identifiers collected at any point                                                    |
+| Informed consent             | Plain-English consent prompt on every form; purpose and retention period stated clearly                           |
+| Under-16 safeguarding        | Parental or school authority consent required before deployment; no PII collected                                 |
+| AI replacing human judgement | All AI outputs are labelled as AI-assisted; every report prompts human review before action                       |
+| Amplifying majority voices   | Missing Voices Engine flags theme-level dominance before output is acted on                                       |
+| Individual profiling         | Group data is only shown in aggregate; demographic tags cannot be linked to individual responses                  |
+| Small sample bias            | System discloses sample size on all outputs and warns when below a minimum reliable threshold                     |
+| Transparency of AI limits    | All AI-generated narratives include a confidence caveat and encourage organiser verification                      |
+| Accountability               | Decision Impact Simulator outputs are not prescriptive — they are framed as _considerations_, not recommendations |
 
-**Core design principle:** CivicLens augments human deliberation. Every AI output is a prompt for human conversation, not a substitute for it.
+**Core design principle:** Voxify augments human deliberation. Every AI output is a prompt for human conversation, not a substitute for it.
 
 ---
 
@@ -216,10 +218,10 @@ Ethics in CivicLens is structural, not decorative.
 
 ## Summary
 
-Student voices are currently collected and forgotten. CivicLens changes this across every stage of the process: removing barriers to participation, ensuring the responses collected actually represent the community, surfacing real trade-offs rather than false consensus, supporting decisions with impact modelling, and — critically — telling students what happened because of what they said.
+Student voices are currently collected and forgotten. Voxify changes this across every stage of the process: removing barriers to participation, ensuring the responses collected actually represent the community, surfacing real trade-offs rather than false consensus, supporting decisions with impact modelling, and — critically — telling students what happened because of what they said.
 
 This is not a polling tool. It is a democratic participation system designed around the question every consultation should answer but almost never does:
 
 **Did it matter that I spoke?**
 
-With CivicLens, the answer is always visible.
+With Voxify, the answer is always visible.

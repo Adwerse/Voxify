@@ -1,0 +1,193 @@
+[
+  {
+    "consultationId": "campus-wellbeing-spring-2026",
+    "generatedAt": "2026-03-27T14:20:56.736Z",
+    "themes": [
+      {
+        "id": "224f1459-2384-498a-bf43-f85b6644b0ef",
+        "label": "General Feedback",
+        "description": "Fallback grouping used because structured model output was not parseable for this run.",
+        "responseIds": [
+          "9f169822-e25f-4ae0-9317-26d6e36908c2",
+          "73219b35-6718-4ddb-8207-e9b03776466a",
+          "8e4ef588-ba52-4757-a717-5425f9c7a947",
+          "6d935137-144e-4361-9487-cd841211c513",
+          "ee99e930-6eac-4d1f-bf64-441d96720e7f",
+          "1decb19c-cf03-4cff-a9d8-25ade11cc36d",
+          "67d975a6-8b0d-4d62-a217-0358b97c97b8",
+          "f589f4da-aa6d-478c-bb2d-5c0906233380",
+          "b76747f9-e2a4-4574-8a81-cbc588a5f455",
+          "c15c0825-1ee7-488c-a412-20db870ea1de",
+          "6b1427d8-55d6-4285-8801-81cee5c0ca07",
+          "0bb6f1d9-0f85-4435-9aac-4b0f7aa6ff93",
+          "35a752e0-0bb9-497c-b126-c163b3a364a4",
+          "de613896-7f76-4b17-b25e-64f847e06ecb",
+          "7f74c8eb-2139-4737-a476-89ca4018ef7a",
+          "2e2289af-0f63-4d5e-b480-5adf5d81f333",
+          "e788473f-b74f-4ca2-9636-2b9b1e22f0b7",
+          "687e78c8-8b09-47bb-b6cd-cac605d982af",
+          "a65e51c0-8366-483f-9a07-a870d1366e5c",
+          "30d70a0b-d377-4f0a-8ea3-0534dff76824",
+          "bcbebdbc-058e-46f5-8c63-4851aed21cf0",
+          "a1804e42-f7eb-471d-8795-e56b2a879c56",
+          "ad743a39-df43-4492-aadd-6dce4f72c2ef",
+          "69d43e55-eec2-442d-9133-87f309c3bd75",
+          "7c4cd9c0-8a0b-4ac5-8ef9-18ef382cf691",
+          "3000f98b-d761-471c-8d2b-f412278c9f0f",
+          "acf7e027-f504-41d3-adfe-1ef068bc0e1a",
+          "28fcdead-d268-433a-8d8b-da7224d33bff",
+          "1c51f745-2640-408c-a8ae-9c5ee4883964",
+          "81454ff8-1cff-4197-9dee-e0bba140d88f",
+          "897ca2a0-ab23-42c0-83f2-7bfac5b9838b",
+          "836712a2-87d6-4918-adb7-834b4c19aea8",
+          "6ec87af5-f44e-4743-8e13-0c2349371be0",
+          "986b9df0-326b-4d45-8fda-1d2c012e27c2",
+          "03310b81-cbd8-47bf-8547-a229a3f8910e",
+          "a39b0a48-cbb1-463a-8b27-5b009689db96",
+          "23e1c099-cbf8-44f1-b2cd-ce5d8ed93d4f",
+          "c590c762-2d9a-4c2d-9359-896590f3edce",
+          "5bd5dd73-f2d1-4d1d-8365-c683084ed026",
+          "ea1466ff-3081-4a2c-a99d-dc52be271a1b",
+          "b751aedc-389b-4125-bf91-536075d2a401",
+          "7acf9158-aac1-4a3d-948b-df4fa4f5263b",
+          "b480b737-3228-4e24-b782-ee6f8911b044",
+          "d75f3b24-c135-477e-b75f-e252fd2e1b77",
+          "4e579593-5e57-4e86-92bc-9cb098eb1df8",
+          "640062fe-ef85-4c92-9d2c-bc909b22206a",
+          "b1afab39-5a4d-422f-822a-80519108cc78",
+          "be87a180-d2d0-4013-a15e-c0c22f94ed01",
+          "9862a8d3-2cb2-402b-b7a2-be0a0d249d69",
+          "683e6263-2311-4caa-be9d-9f512e2baba3",
+          "c03a6600-4a01-4654-9e1c-dd8dacc510ae",
+          "3b491aba-6fc5-4dcd-9d74-cbfa7c4d7169",
+          "4b58cc31-fb49-404e-85b2-0cbd9d94b1bc",
+          "add8fa22-1bf1-450c-a292-87e9b2d46401",
+          "a44c6691-89e5-4f72-aa94-149694c51256",
+          "e02f5d2e-b4ee-4f0f-b7f6-fa5063a1a416"
+        ]
+      }
+    ],
+    "representationStats": {
+      "groupCounts": {
+        "international": 12,
+        "first-year": 18,
+        "commuter": 17,
+        "postgraduate": 11,
+        "mature": 10,
+        "disabled": 5
+      },
+      "ageBandCounts": {
+        "18-21": 25,
+        "22-25": 16,
+        "other": 10,
+        "16-17": 5
+      },
+      "themeBreakdown": {
+        "224f1459-2384-498a-bf43-f85b6644b0ef": {
+          "groupCounts": {
+            "international": 12,
+            "first-year": 18,
+            "commuter": 17,
+            "postgraduate": 11,
+            "mature": 10,
+            "disabled": 5
+          },
+          "ageBandCounts": {
+            "18-21": 25,
+            "22-25": 16,
+            "other": 10,
+            "16-17": 5
+          },
+          "groupShares": {
+            "international": 0.1643835616438356,
+            "first-year": 0.2465753424657534,
+            "commuter": 0.2328767123287671,
+            "postgraduate": 0.1506849315068493,
+            "mature": 0.136986301369863,
+            "disabled": 0.0684931506849315
+          },
+          "ageBandShares": {
+            "18-21": 0.44642857142857145,
+            "22-25": 0.2857142857142857,
+            "other": 0.17857142857142858,
+            "16-17": 0.08928571428571429
+          }
+        }
+      },
+      "expectedGroupShares": {
+        "first-year": 0.25,
+        "commuter": 0.2,
+        "international": 0.15,
+        "disabled": 0.12,
+        "postgraduate": 0.18,
+        "mature": 0.1
+      },
+      "expectedAgeBandShares": {
+        "16-17": 0.12,
+        "18-21": 0.56,
+        "22-25": 0.22,
+        "other": 0.1
+      }
+    },
+    "underrepresentationAlerts": [],
+    "equityNarrative": "Based on the participation data collected, a total of 73 responses were recorded across the tracked student groups. Looking at how participation compares to expected population shares, most groups are broadly in line with or slightly above their expected representation. Commuter students (23.3% of responses vs. an expected 20%), first-year students (24.7% vs. 25%), international students (16.4% vs. 15%), postgraduate students (15.1% vs. 18%), and mature students (13.7% vs. 10%) are all reasonably close to their expected shares. However, disabled students appear notably underrepresented, making up approximately 6.8% of responses against an expected share of 12%, suggesting this group may face barriers to participation that warrant attention.\n\nOn age, the 18–21 band accounts for 44.6% of responses compared to an expected 56%, indicating younger students in this range may be participating at lower rates than anticipated. The 16–17 age band also falls below its expected share (8.9% vs. 12%), though the small absolute count of five respondents means this figure should be interpreted with caution.\n\nIt is important to note that with a total sample of 73 participants, these figures carry meaningful uncertainty. Small absolute counts — particularly for the disabled group (5 respondents) and the 16–17 age band (5 respondents) — mean that percentage-based comparisons may not reliably reflect true population patterns. The expected shares used as benchmarks may themselves be estimates, and sampling bias cannot be ruled out.\n\nTo improve equity of participation, outreach efforts could focus on disabled student communities and younger age groups, for example through partnerships with disability support services, student unions, and pre-arrival or induction channels. Targeted communications through group-specific networks may help ensure future engagement is more representative across all student populations.",
+    "reports": {
+      "studentSummary": "Thank you to everyone who took part in this consultation. We received 56 responses from students across a range of groups, including first-year, commuter, international, postgraduate, mature, and disabled students.\n\nHere is what came up most in your feedback:\n\n**Mental health and wellbeing support** — Many of you said it is hard to get counselling appointments, especially around exam time. Waiting times and the availability of evening slots were mentioned repeatedly.\n\n**Campus spaces and facilities** — Canteen queues between lectures were flagged as a problem. Several of you asked for a live or regularly updated board showing how busy the canteen and study spaces are, so you can plan your day better.\n\n**Transport** — Evening transport to and from campus was described as limited. A number of responses suggested piloting a late shuttle on busy teaching days.\n\n**Communication and transparency** — Several of you asked for clearer, more regular updates from organisers — for example, monthly progress notes and published room availability with frequent refreshes.\n\nA few things to keep in mind about this data: only 56 responses were collected, which is a small sample. The findings reflect the views of people who chose to respond, and may not represent all students equally. Please treat these results as a starting point for conversation, not a definitive picture of the whole student body.",
+      "organiserBriefing": "**Consultation Organiser Briefing**\n\n---\n\n**Overview**\n- Total responses: 56\n- Thematic structure: All responses were grouped into a single fallback theme ('General Feedback') due to a parsing issue during automated theme extraction. Structured thematic analysis was not completed for this run. Organisers should treat theme-level breakdowns with caution and consider manual re-coding before drawing firm conclusions.\n\n---\n\n**Representation Summary**\n\n| Group | Responses | Expected Share | Actual Share | Status |\n|---|---|---|---|---|\n| First-year | 18 | 25.0% | 24.7% | Within range |\n| Commuter | 17 | 20.0% | 23.3% | Slightly over |\n| International | 12 | 15.0% | 16.4% | Within range |\n| Postgraduate | 11 | 18.0% | 15.1% | Slightly under |\n| Mature | 10 | 10.0% | 13.7% | Slightly over |\n| Disabled | 5 | 12.0% | 6.8% | Under |\n\n| Age Band | Responses | Expected Share | Actual Share | Status |\n|---|---|---|---|---|\n| 16–17 | 5 | 12.0% | 8.9% | Under |\n| 18–21 | 25 | 56.0% | 44.6% | Under |\n| 22–25 | 16 | 22.0% | 28.6% | Slightly over |\n| Other | 10 | 10.0% | 17.9% | Over |\n\n**Underrepresentation Alerts:** No automated alerts were triggered. However, organisers should note that disabled students (6.8% actual vs. 12.0% expected) and 16–17 age band respondents (8.9% actual vs. 12.0% expected) are notably below expected shares. These gaps may reflect access barriers, lower awareness of the consultation, or self-selection effects. Decisions informed by this data should account for the possibility that these groups' views are underweighted.\n\n---\n\n**Key Issues Raised (from sample quotes)**\n\n1. **Mental health access** — Counselling waiting times and lack of evening appointment slots. Flagged as particularly acute during exam periods.\n2. **Campus space management** — Canteen congestion between lectures; demand for a live or near-live occupancy display for canteen and study spaces.\n3. **Evening transport** — Limited options for students travelling to/from campus in the evening; specific suggestion of a late shuttle on peak teaching days.\n4. **Organiser communication** — Requests for a transparent, regular update mechanism (e.g. monthly progress notes, published room availability refreshed every 30 minutes).\n\n---\n\n**Decision-Relevant Caveats**\n\n- **Sample size:** 56 responses is a small sample. Percentage-based comparisons should be interpreted cautiously; small absolute differences in group counts can produce large apparent percentage gaps.\n- **Self-selection bias:** Respondents chose to participate. Groups with lower response rates (notably disabled students and 16–17 year olds) may hold different views from those captured here.\n- **Single theme fallback:** The automated thematic model did not produce structured output for this run. All responses are grouped under 'General Feedback'. Organisers should not treat this as evidence that responses were thematically uniform.\n- **No legal or policy advice is implied** by this briefing. Decisions on resource allocation, service changes, or access adjustments should involve appropriate institutional stakeholders.\n\n---\n\n**Recommended Next Steps**\n\n1. Conduct manual or re-run automated thematic coding before presenting findings to decision-makers.\n2. Consider targeted follow-up engagement with disabled students and 16–17 year olds to address underrepresentation before closing the consultation.\n3. Publish a summary of findings to respondents, including an acknowledgement of what will and will not be acted upon, and a timeline for any changes under consideration.\n4. Log this briefing and the underlying data for audit and accountability purposes."
+    },
+    "conflicts": [
+      {
+        "themeId": "224f1459-2384-498a-bf43-f85b6644b0ef",
+        "clusters": [
+          {
+            "label": "Mental health access: timing vs. volume",
+            "exampleQuotes": [
+              "More evening counselling slots would help.",
+              "Waiting times are too long during exams.",
+              "Mental health appointment slots are difficult to access."
+            ]
+          },
+          {
+            "label": "Food: affordability vs. queue management",
+            "exampleQuotes": [
+              "Finding affordable healthy food on campus is difficult.",
+              "Canteen queues are too long between lectures.",
+              "Offer low-cost meal bundles at lunchtime."
+            ]
+          },
+          {
+            "label": "Space: individual quiet study vs. group collaboration",
+            "exampleQuotes": [
+              "Library quiet zones fill up too quickly during assessment weeks.",
+              "Group project rooms are often fully booked."
+            ]
+          },
+          {
+            "label": "Transparency preference: real-time data vs. periodic narrative updates",
+            "exampleQuotes": [
+              "Add a live occupancy board for canteen and study spaces. I want to see visible updates before next term.",
+              "Publish room availability with 30-minute updates. A monthly progress note from organisers would help.",
+              "Share what cannot be changed yet and why."
+            ]
+          },
+          {
+            "label": "Governance: student rep inclusion vs. organisational transparency",
+            "exampleQuotes": [
+              "Please include student reps in follow-up decisions.",
+              "A transparent timeline would increase trust.",
+              "Share what cannot be changed yet and why."
+            ]
+          },
+          {
+            "label": "Transport: evening shuttle vs. no transport concern raised",
+            "exampleQuotes": [
+              "Evening transport options to campus are limited.",
+              "Pilot a late shuttle on peak teaching days.",
+              "Canteen queues are too long between lectures."
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

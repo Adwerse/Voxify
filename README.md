@@ -43,16 +43,25 @@ Voxify/
 │   └── ConsentBanner.tsx         # Plain-English consent prompt
 │
 ├── lib/                          # Server-side logic (never imported by client)
-│   ├── claude.ts                 # Anthropic client setup + shared prompt helpers
+│   ├── ai.ts                     # Anthropic client wrapper and orchestration helpers
 │   ├── analyse.ts                # Theme clustering + dual-report generation logic
 │   ├── bias.ts                   # Missing Voices Engine logic
 │   ├── simulator.ts              # Decision Impact Simulator logic
-│   └── store.ts                  # Read/write helpers for flat JSON data store
+│   ├── store.ts                  # Read/write helpers for poll/survey JSON storage
+│   └── prompts.ts                # TXT prompt template loader for AI calls
 │
-├── data/                         # Flat JSON files (demo data store)
-│   ├── polls.json                # Poll definitions (question, id, active status)
-│   ├── responses.json            # All submitted student responses
-│   └── outcomes.json             # Decisions made + outcome notifications
+├── data/                         # Flat JSON files consumed by app + AI layer
+│   ├── polls.json                # Poll definitions and question metadata
+│   ├── surveys.json              # Submitted survey responses
+│   ├── decisions.json            # Decision proposals from organisers
+│   └── outcomes.json             # Final decisions + close-loop explanations
+│
+├── prompts/                      # AI prompt templates in plain TXT files
+│   ├── theme-clustering.txt
+│   ├── dual-reports.txt
+│   ├── conflicting-viewpoints.txt
+│   ├── equity-narrative.txt
+│   └── decision-impact.txt
 │
 ├── types/                        # Shared TypeScript type definitions
 │   └── index.ts                  # Response, Poll, Theme, GroupStats, SimResult, etc.
@@ -63,8 +72,20 @@ Voxify/
 ├── .env.local                    # ANTHROPIC_API_KEY (never committed)
 ├── .gitignore
 ├── next.config.ts
-├── tailwind.config.ts
 ├── tsconfig.json
 ├── package.json
 └── README.md
 ```
+
+## Demo seeding mode
+
+- In development, Voxify auto-seeds synthetic survey responses on the first request.
+- Auto-seeding runs only when fewer than 56 responses exist for the first consultation.
+- To disable auto-seeding, set `VOXIFY_ENABLE_DEMO_SEED=false` in `.env.local`.
+- To trigger manual seeding while `npm run dev` is running, use:
+
+```sh
+npm run seed:demo
+```
+
+- Manual seeding calls `POST /api/dev/seed` and is available in development only.
