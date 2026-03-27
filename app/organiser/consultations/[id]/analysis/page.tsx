@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { MarkdownContent } from "@/components/markdown-content";
 import { ReportTabs } from "@/components/report-tabs";
 import { RepresentationCharts } from "@/components/representation-charts";
 import { RunAnalysisButton } from "@/components/run-analysis-button";
@@ -14,6 +15,17 @@ export const dynamic = "force-dynamic";
 type AnalysisPageProps = {
   params: Promise<{ id: string }>;
 };
+
+const THEME_COLORS = [
+  "#1b69d2",
+  "#7c3aed",
+  "#059669",
+  "#d97706",
+  "#dc2626",
+  "#0891b2",
+  "#db2777",
+  "#65a30d",
+];
 
 export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
   const { id } = await props.params;
@@ -29,18 +41,38 @@ export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
     (analysis?.themes ?? []).map((theme) => [theme.id, theme.label]),
   );
 
+  // Derived stats (only computed when analysis exists)
+  const totalUniqueResponses = analysis
+    ? new Set(analysis.themes.flatMap((t) => t.responseIds)).size
+    : 0;
+  const maxThemeResponses = analysis
+    ? Math.max(...analysis.themes.map((t) => t.responseIds.length), 1)
+    : 1;
+  const groupCount = analysis
+    ? Object.keys(analysis.representationStats.groupCounts).length
+    : 0;
+  const formattedDate = analysis
+    ? new Date(analysis.generatedAt).toLocaleString("en-GB", {
+        day: "numeric",
+        month: "short",
+        hour: "2-digit",
+        minute: "2-digit",
+      })
+    : "";
+
   return (
     <main className={styles.page}>
       <header className={styles.headerCard}>
-        <p className={styles.eyebrow}>Organiser Dashboard</p>
+        <p className={styles.eyebrow}>Organiser Dashboard &rsaquo; Stage 2</p>
         <h1 className={styles.title}>{consultation.title}</h1>
         <p className={styles.description}>
-          Stage 2 (Analyse): themes, representation, and conflicting viewpoints.
+          Theme clustering, representation analysis, dual reports, and
+          conflicting viewpoints — all generated from participant responses.
         </p>
 
         <div className={styles.topActions}>
           <Link className={styles.backLink} href="/organiser">
-            Back to organiser home
+            &larr; Back to Dashboard
           </Link>
           <RunAnalysisButton
             consultationId={id}
@@ -52,40 +84,101 @@ export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
 
       {analysis ? (
         <>
+          {/* ── Analysis summary strip ── */}
+          <div className={styles.statsStrip}>
+            <div className={styles.statsItem}>
+              <span className={styles.statsValue}>{totalUniqueResponses}</span>
+              <span className={styles.statsLabel}>responses analysed</span>
+            </div>
+            <div className={styles.statsDivider} />
+            <div className={styles.statsItem}>
+              <span className={styles.statsValue}>{analysis.themes.length}</span>
+              <span className={styles.statsLabel}>themes identified</span>
+            </div>
+            <div className={styles.statsDivider} />
+            <div className={styles.statsItem}>
+              <span className={styles.statsValue}>{groupCount}</span>
+              <span className={styles.statsLabel}>groups represented</span>
+            </div>
+            <div className={styles.statsDivider} />
+            <div className={styles.statsItem}>
+              <span className={styles.statsValue}>{formattedDate}</span>
+              <span className={styles.statsLabel}>last analysed</span>
+            </div>
+          </div>
+
+          {/* ── Theme Overview ── */}
           <section className={styles.sectionCard}>
-            <h2 className={styles.sectionTitle}>Theme Overview</h2>
-            <div className={styles.tableWrap}>
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Theme</th>
-                    <th>Description</th>
-                    <th>Responses</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {analysis.themes.map((theme) => (
-                    <tr key={theme.id}>
-                      <td>{theme.label}</td>
-                      <td>{theme.description || "—"}</td>
-                      <td>{theme.responseIds.length}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.sectionIcon}>&#128196;</span>
+              Theme Overview
+            </h2>
+            <div className={styles.themesGrid}>
+              {analysis.themes.map((theme, themeIndex) => (
+                <div
+                  className={styles.themeCard}
+                  key={theme.id}
+                  style={
+                    {
+                      "--theme-accent":
+                        THEME_COLORS[themeIndex % THEME_COLORS.length],
+                    } as React.CSSProperties
+                  }
+                >
+                  <p className={styles.themeLabel}>{theme.label}</p>
+                  {theme.description ? (
+                    <p className={styles.themeDescription}>
+                      {theme.description}
+                    </p>
+                  ) : null}
+                  <div className={styles.themeFooter}>
+                    <span className={styles.themeCount}>
+                      {theme.responseIds.length}{" "}
+                      {theme.responseIds.length === 1
+                        ? "response"
+                        : "responses"}
+                    </span>
+                    <span className={styles.themeShare}>
+                      {totalUniqueResponses > 0
+                        ? `${((theme.responseIds.length / totalUniqueResponses) * 100).toFixed(0)}%`
+                        : "—"}
+                    </span>
+                  </div>
+                  <div className={styles.themeBar}>
+                    <div
+                      className={styles.themeBarFill}
+                      style={{
+                        width: `${(theme.responseIds.length / maxThemeResponses) * 100}%`,
+                      }}
+                    />
+                  </div>
+                </div>
+              ))}
             </div>
           </section>
 
+          {/* ── Dual Reports ── */}
           <section className={styles.sectionCard}>
-            <h2 className={styles.sectionTitle}>Dual Reports</h2>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.sectionIcon}>&#128209;</span>
+              Dual Reports
+            </h2>
+            <p className={styles.sectionSubtext}>
+              The same findings, written for two audiences: students who
+              participated, and organisers making decisions.
+            </p>
             <ReportTabs
               organiserBriefing={analysis.reports.organiserBriefing}
               studentSummary={analysis.reports.studentSummary}
             />
           </section>
 
+          {/* ── Conflicting Viewpoints ── */}
           <section className={styles.sectionCard}>
-            <h2 className={styles.sectionTitle}>Conflicting Viewpoints</h2>
+            <h2 className={styles.sectionTitle}>
+              <span className={styles.sectionIcon}>&#9878;&#65039;</span>
+              Conflicting Viewpoints
+            </h2>
             {analysis.conflicts.length === 0 ? (
               <p className={styles.muted}>
                 No major internal conflicts were identified in this run.
@@ -116,8 +209,10 @@ export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
             )}
           </section>
 
+          {/* ── Representation & Missing Voices ── */}
           <section className={styles.sectionCard}>
             <h2 className={styles.sectionTitle}>
+              <span className={styles.sectionIcon}>&#128202;</span>
               Representation &amp; Missing Voices
             </h2>
 
@@ -127,7 +222,7 @@ export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
             />
 
             <div className={styles.tableWrap}>
-              <h3 className={styles.subheading}>Theme × Group Share</h3>
+              <h3 className={styles.subheading}>Theme &times; Group Share</h3>
               <table className={styles.table}>
                 <thead>
                   <tr>
@@ -166,7 +261,7 @@ export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
             </div>
 
             <div className={styles.tableWrap}>
-              <h3 className={styles.subheading}>Theme × Age Band Share</h3>
+              <h3 className={styles.subheading}>Theme &times; Age Band Share</h3>
               <table className={styles.table}>
                 <thead>
                   <tr>
@@ -214,12 +309,41 @@ export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
                 <ul className={styles.alertList}>
                   {analysis.underrepresentationAlerts.map((alert) => (
                     <li className={styles.alertItem} key={alert.group}>
-                      <p>
-                        <strong>{alert.group}</strong>: expected{" "}
-                        {(alert.expectedShare * 100).toFixed(1)}%, actual{" "}
-                        {(alert.actualShare * 100).toFixed(1)}%.
+                      <p className={styles.alertHeader}>
+                        <span className={styles.alertIcon}>&#9888;&#65039;</span>
+                        <strong>{alert.group}</strong>
                       </p>
-                      <p>{alert.message}</p>
+                      <div className={styles.alertBars}>
+                        <div className={styles.alertBarRow}>
+                          <span className={styles.alertBarLabel}>Expected</span>
+                          <div className={styles.alertBarTrack}>
+                            <div
+                              className={styles.alertBarExpected}
+                              style={{
+                                width: `${Math.min(alert.expectedShare * 300, 100)}%`,
+                              }}
+                            />
+                          </div>
+                          <span className={styles.alertBarValue}>
+                            {(alert.expectedShare * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                        <div className={styles.alertBarRow}>
+                          <span className={styles.alertBarLabel}>Actual</span>
+                          <div className={styles.alertBarTrack}>
+                            <div
+                              className={styles.alertBarActual}
+                              style={{
+                                width: `${Math.min(alert.actualShare * 300, 100)}%`,
+                              }}
+                            />
+                          </div>
+                          <span className={styles.alertBarValue}>
+                            {(alert.actualShare * 100).toFixed(1)}%
+                          </span>
+                        </div>
+                      </div>
+                      <p className={styles.alertMessage}>{alert.message}</p>
                     </li>
                   ))}
                 </ul>
@@ -227,14 +351,36 @@ export default async function OrganiserAnalysisPage(props: AnalysisPageProps) {
             </div>
 
             <div className={styles.narrativeSection}>
-              <h3 className={styles.subheading}>Equity Narrative</h3>
-              <p className={styles.narrative}>{analysis.equityNarrative}</p>
+              <h3 className={styles.narrativeTitle}>Equity Narrative</h3>
+              <MarkdownContent content={analysis.equityNarrative} />
             </div>
+          </section>
+
+          {/* ── Bottom CTA ── */}
+          <section className={styles.ctaSection}>
+            <div className={styles.ctaContent}>
+              <p className={styles.ctaTitle}>Analysis complete</p>
+              <p className={styles.ctaText}>
+                Model proposed decisions against these findings to understand
+                their impact on different student groups before committing.
+              </p>
+            </div>
+            <Link
+              className={styles.ctaButton}
+              href={`/organiser/consultations/${id}/simulator`}
+            >
+              Open Decision Simulator &rarr;
+            </Link>
           </section>
         </>
       ) : (
         <section className={styles.emptyState}>
-          <h2 className={styles.sectionTitle}>No analysis cached yet</h2>
+          <h2
+            className={styles.sectionTitle}
+            style={{ justifyContent: "center" }}
+          >
+            No analysis cached yet
+          </h2>
           <p className={styles.muted}>
             Run analysis to generate theme clustering, representation
             statistics, dual reports, and conflict highlights.

@@ -1,10 +1,10 @@
 [
   {
     "consultationId": "campus-wellbeing-spring-2026",
-    "generatedAt": "2026-03-27T14:20:56.736Z",
+    "generatedAt": "2026-03-27T15:30:16.097Z",
     "themes": [
       {
-        "id": "224f1459-2384-498a-bf43-f85b6644b0ef",
+        "id": "5ad5cb5f-e5b7-455d-9de2-39b452da50d8",
         "label": "General Feedback",
         "description": "Fallback grouping used because structured model output was not parseable for this run.",
         "responseIds": [
@@ -83,7 +83,7 @@
         "16-17": 5
       },
       "themeBreakdown": {
-        "224f1459-2384-498a-bf43-f85b6644b0ef": {
+        "5ad5cb5f-e5b7-455d-9de2-39b452da50d8": {
           "groupCounts": {
             "international": 12,
             "first-year": 18,
@@ -130,14 +130,14 @@
       }
     },
     "underrepresentationAlerts": [],
-    "equityNarrative": "Based on the participation data collected, a total of 73 responses were recorded across the tracked student groups. Looking at how participation compares to expected population shares, most groups are broadly in line with or slightly above their expected representation. Commuter students (23.3% of responses vs. an expected 20%), first-year students (24.7% vs. 25%), international students (16.4% vs. 15%), postgraduate students (15.1% vs. 18%), and mature students (13.7% vs. 10%) are all reasonably close to their expected shares. However, disabled students appear notably underrepresented, making up approximately 6.8% of responses against an expected share of 12%, suggesting this group may face barriers to participation that warrant attention.\n\nOn age, the 18–21 band accounts for 44.6% of responses compared to an expected 56%, indicating younger students in this range may be participating at lower rates than anticipated. The 16–17 age band also falls below its expected share (8.9% vs. 12%), though the small absolute count of five respondents means this figure should be interpreted with caution.\n\nIt is important to note that with a total sample of 73 participants, these figures carry meaningful uncertainty. Small absolute counts — particularly for the disabled group (5 respondents) and the 16–17 age band (5 respondents) — mean that percentage-based comparisons may not reliably reflect true population patterns. The expected shares used as benchmarks may themselves be estimates, and sampling bias cannot be ruled out.\n\nTo improve equity of participation, outreach efforts could focus on disabled student communities and younger age groups, for example through partnerships with disability support services, student unions, and pre-arrival or induction channels. Targeted communications through group-specific networks may help ensure future engagement is more representative across all student populations.",
+    "equityNarrative": "Based on the participation data collected, a total of 73 responses were recorded across the tracked student groups. Looking at how participation compares to expected population shares, most groups are broadly in line with their anticipated representation. First-year students account for approximately 24.7% of responses against an expected 25%, and commuter students represent around 23.3% against an expected 20%, suggesting slightly stronger-than-expected engagement from that group. International students (16.4% vs. 15% expected) and mature students (13.7% vs. 10% expected) also appear at or above their expected shares.\n\nThe group showing the most notable gap is disabled students, who make up approximately 6.8% of responses against an expected share of 12% — meaning their participation is roughly half of what would be anticipated given their estimated population proportion. Postgraduate students are also slightly below expectation at 15.1% against 18%. On age bands, the 18–21 group (44.6%) and 22–25 group (28.6%) are somewhat below their expected shares of 56% and 22% respectively, while the 16–17 age band (8.9%) falls short of its 12% expectation.\n\nIt is important to note that with only 73 total responses, these figures should be interpreted with caution. Small absolute counts — particularly the 5 responses from disabled students and 5 from the 16–17 age band — mean that percentage comparisons are highly sensitive to individual responses and may not reliably reflect true participation patterns. Additionally, the expected shares used as benchmarks are themselves estimates and may not perfectly capture the actual population composition.\n\nGiven these patterns, outreach efforts might focus on increasing engagement among disabled students and 16–17-year-olds as groups, for example by working with relevant support services, student networks, or representative bodies to promote participation through trusted channels. No conclusions should be drawn about any individual participant from this data.",
     "reports": {
-      "studentSummary": "Thank you to everyone who took part in this consultation. We received 56 responses from students across a range of groups, including first-year, commuter, international, postgraduate, mature, and disabled students.\n\nHere is what came up most in your feedback:\n\n**Mental health and wellbeing support** — Many of you said it is hard to get counselling appointments, especially around exam time. Waiting times and the availability of evening slots were mentioned repeatedly.\n\n**Campus spaces and facilities** — Canteen queues between lectures were flagged as a problem. Several of you asked for a live or regularly updated board showing how busy the canteen and study spaces are, so you can plan your day better.\n\n**Transport** — Evening transport to and from campus was described as limited. A number of responses suggested piloting a late shuttle on busy teaching days.\n\n**Communication and transparency** — Several of you asked for clearer, more regular updates from organisers — for example, monthly progress notes and published room availability with frequent refreshes.\n\nA few things to keep in mind about this data: only 56 responses were collected, which is a small sample. The findings reflect the views of people who chose to respond, and may not represent all students equally. Please treat these results as a starting point for conversation, not a definitive picture of the whole student body.",
-      "organiserBriefing": "**Consultation Organiser Briefing**\n\n---\n\n**Overview**\n- Total responses: 56\n- Thematic structure: All responses were grouped into a single fallback theme ('General Feedback') due to a parsing issue during automated theme extraction. Structured thematic analysis was not completed for this run. Organisers should treat theme-level breakdowns with caution and consider manual re-coding before drawing firm conclusions.\n\n---\n\n**Representation Summary**\n\n| Group | Responses | Expected Share | Actual Share | Status |\n|---|---|---|---|---|\n| First-year | 18 | 25.0% | 24.7% | Within range |\n| Commuter | 17 | 20.0% | 23.3% | Slightly over |\n| International | 12 | 15.0% | 16.4% | Within range |\n| Postgraduate | 11 | 18.0% | 15.1% | Slightly under |\n| Mature | 10 | 10.0% | 13.7% | Slightly over |\n| Disabled | 5 | 12.0% | 6.8% | Under |\n\n| Age Band | Responses | Expected Share | Actual Share | Status |\n|---|---|---|---|---|\n| 16–17 | 5 | 12.0% | 8.9% | Under |\n| 18–21 | 25 | 56.0% | 44.6% | Under |\n| 22–25 | 16 | 22.0% | 28.6% | Slightly over |\n| Other | 10 | 10.0% | 17.9% | Over |\n\n**Underrepresentation Alerts:** No automated alerts were triggered. However, organisers should note that disabled students (6.8% actual vs. 12.0% expected) and 16–17 age band respondents (8.9% actual vs. 12.0% expected) are notably below expected shares. These gaps may reflect access barriers, lower awareness of the consultation, or self-selection effects. Decisions informed by this data should account for the possibility that these groups' views are underweighted.\n\n---\n\n**Key Issues Raised (from sample quotes)**\n\n1. **Mental health access** — Counselling waiting times and lack of evening appointment slots. Flagged as particularly acute during exam periods.\n2. **Campus space management** — Canteen congestion between lectures; demand for a live or near-live occupancy display for canteen and study spaces.\n3. **Evening transport** — Limited options for students travelling to/from campus in the evening; specific suggestion of a late shuttle on peak teaching days.\n4. **Organiser communication** — Requests for a transparent, regular update mechanism (e.g. monthly progress notes, published room availability refreshed every 30 minutes).\n\n---\n\n**Decision-Relevant Caveats**\n\n- **Sample size:** 56 responses is a small sample. Percentage-based comparisons should be interpreted cautiously; small absolute differences in group counts can produce large apparent percentage gaps.\n- **Self-selection bias:** Respondents chose to participate. Groups with lower response rates (notably disabled students and 16–17 year olds) may hold different views from those captured here.\n- **Single theme fallback:** The automated thematic model did not produce structured output for this run. All responses are grouped under 'General Feedback'. Organisers should not treat this as evidence that responses were thematically uniform.\n- **No legal or policy advice is implied** by this briefing. Decisions on resource allocation, service changes, or access adjustments should involve appropriate institutional stakeholders.\n\n---\n\n**Recommended Next Steps**\n\n1. Conduct manual or re-run automated thematic coding before presenting findings to decision-makers.\n2. Consider targeted follow-up engagement with disabled students and 16–17 year olds to address underrepresentation before closing the consultation.\n3. Publish a summary of findings to respondents, including an acknowledgement of what will and will not be acted upon, and a timeline for any changes under consideration.\n4. Log this briefing and the underlying data for audit and accountability purposes."
+      "studentSummary": "Thank you to everyone who took part in this consultation. We received 56 responses from students across a range of backgrounds, including first-year, commuter, international, postgraduate, mature, and disabled students.\n\nHere is what the responses told us:\n\n**Mental health and wellbeing** came up frequently. Many students said that counselling appointment slots are hard to get, especially around exam periods, and that more evening availability would help.\n\n**Campus spaces and queues** were also a common concern. Students mentioned long canteen queues between lectures and difficulty finding available study spaces. Several people asked for a live or regularly updated display showing how busy spaces are.\n\n**Transport** was raised by a number of students, particularly those travelling to campus in the evening. Limited late-night options were highlighted, and one suggestion was a late shuttle on busy teaching days.\n\n**Communication and transparency** mattered to respondents. Several students asked for regular, visible updates from organisers — for example, monthly progress notes or a clear timeline for any changes being considered.\n\n**Please note:** These findings are based on 56 responses. While a range of student groups are represented, this is a relatively small sample and may not reflect the views of the wider student population. Results should be read as indicative, not definitive.",
+      "organiserBriefing": "**Consultation Summary — Organiser Briefing**\n\n**Overview**\n- Total responses received: 56\n- Thematic grouping: All responses were captured under a single fallback theme ('General Feedback') due to a structured model parsing issue. Thematic granularity is therefore limited in this run. Organisers should note this as a data quality flag and consider re-running analysis or conducting manual coding if finer theme-level decisions are required.\n\n**Representation Statistics**\n\n| Group | Responses | Expected Share | Actual Share | Status |\n|---|---|---|---|---|\n| First-year | 18 | 25.0% | 24.7% | Within range |\n| Commuter | 17 | 20.0% | 23.3% | Slightly over |\n| International | 12 | 15.0% | 16.4% | Within range |\n| Postgraduate | 11 | 18.0% | 15.1% | Slightly under |\n| Mature | 10 | 10.0% | 13.7% | Slightly over |\n| Disabled | 5 | 12.0% | 6.8% | Under |\n\n| Age Band | Responses | Expected Share | Actual Share | Status |\n|---|---|---|---|---|\n| 16–17 | 5 | 12.0% | 8.9% | Under |\n| 18–21 | 25 | 56.0% | 44.6% | Under |\n| 22–25 | 16 | 22.0% | 28.6% | Over |\n| Other | 10 | 10.0% | 17.9% | Over |\n\n**Underrepresentation Alerts**\n- No automated alerts were triggered by the system threshold. However, organisers should note that:\n  - **Disabled students** (6.8% actual vs. 12.0% expected) are meaningfully underrepresented. Decisions affecting accessibility or support services should not be treated as representative of this group based on this dataset alone.\n  - **16–17 age band** (8.9% actual vs. 12.0% expected) and **18–21 age band** (44.6% actual vs. 56.0% expected) are both below expected levels. Younger student voices may be underweighted.\n  - Organisers are advised to consider targeted follow-up engagement with these groups before finalising any decisions.\n\n**Key Issues Raised (from sample quotes)**\n1. **Mental health access** — Counselling waiting times, particularly during exam periods; demand for evening appointment slots.\n2. **Campus space management** — Canteen congestion between lectures; lack of real-time or near-real-time occupancy information for study spaces and catering areas.\n3. **Evening and late transport** — Limited options for students travelling to or from campus outside standard hours; interest in a pilot late shuttle on peak teaching days.\n4. **Transparency and communication** — Requests for regular, structured progress updates from organisers (e.g. monthly notes, visible timelines for any changes under consideration).\n\n**Decision-Making Considerations**\n- The single-theme fallback grouping limits the ability to cross-reference issues by student group. Treat theme-level breakdowns with caution.\n- Sample size (n=56) is small relative to a typical student population. Findings should be treated as directional indicators, not statistically representative conclusions.\n- Sampling bias cannot be ruled out; self-selection in consultation responses may skew results toward students with stronger existing concerns.\n- No legal or policy advice is implied by this briefing. Organisers should apply their own governance processes when determining next steps.\n\n**Recommended Next Steps**\n1. Flag disabled student and younger age band underrepresentation to the relevant equality or inclusion lead.\n2. Consider re-running thematic analysis to produce structured theme outputs before further reporting.\n3. Determine whether targeted outreach or supplementary consultation is needed for underrepresented groups.\n4. Establish a communication mechanism to report back to respondents, in line with requests for transparency noted in the data."
     },
     "conflicts": [
       {
-        "themeId": "224f1459-2384-498a-bf43-f85b6644b0ef",
+        "themeId": "5ad5cb5f-e5b7-455d-9de2-39b452da50d8",
         "clusters": [
           {
             "label": "Mental health access: timing vs. volume",
@@ -148,7 +148,14 @@
             ]
           },
           {
-            "label": "Food: affordability vs. queue management",
+            "label": "Space scarcity: quiet study vs. collaborative rooms",
+            "exampleQuotes": [
+              "Library quiet zones fill up too quickly during assessment weeks.",
+              "Group project rooms are often fully booked."
+            ]
+          },
+          {
+            "label": "Food: affordability vs. queue length",
             "exampleQuotes": [
               "Finding affordable healthy food on campus is difficult.",
               "Canteen queues are too long between lectures.",
@@ -156,14 +163,7 @@
             ]
           },
           {
-            "label": "Space: individual quiet study vs. group collaboration",
-            "exampleQuotes": [
-              "Library quiet zones fill up too quickly during assessment weeks.",
-              "Group project rooms are often fully booked."
-            ]
-          },
-          {
-            "label": "Transparency preference: real-time data vs. periodic narrative updates",
+            "label": "Transparency preference: real-time data vs. periodic updates",
             "exampleQuotes": [
               "Add a live occupancy board for canteen and study spaces. I want to see visible updates before next term.",
               "Publish room availability with 30-minute updates. A monthly progress note from organisers would help.",
@@ -171,19 +171,18 @@
             ]
           },
           {
-            "label": "Governance: student rep inclusion vs. organisational transparency",
+            "label": "Transport: evening access vs. peak-day provision",
+            "exampleQuotes": [
+              "Evening transport options to campus are limited.",
+              "Pilot a late shuttle on peak teaching days."
+            ]
+          },
+          {
+            "label": "Governance: student inclusion vs. organisational transparency",
             "exampleQuotes": [
               "Please include student reps in follow-up decisions.",
               "A transparent timeline would increase trust.",
               "Share what cannot be changed yet and why."
-            ]
-          },
-          {
-            "label": "Transport: evening shuttle vs. no transport concern raised",
-            "exampleQuotes": [
-              "Evening transport options to campus are limited.",
-              "Pilot a late shuttle on peak teaching days.",
-              "Canteen queues are too long between lectures."
             ]
           }
         ]

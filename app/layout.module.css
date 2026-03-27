@@ -1,0 +1,51 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  height: 3.5rem;
+  background: #ffffff;
+  border-bottom: 1px solid #d8dfec;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.04);
+}
+
+.navBrand {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1b69d2;
+  letter-spacing: -0.02em;
+}
+
+.navLinks {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.navLink {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #4a5c76;
+  padding: 0.45rem 0.85rem;
+  border-radius: 8px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.navLink:hover {
+  color: #1b69d2;
+  background: #f0f6ff;
+}
+
+@media (max-width: 480px) {
+  .nav {
+    padding: 0 1rem;
+    height: 3rem;
+  }
+
+  .navLinks {
+    gap: 0;
+  }
+}

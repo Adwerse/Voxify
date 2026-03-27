@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import type { DecisionImpactResult, DecisionProposal } from "@/types";
 
+import { MarkdownContent } from "./markdown-content";
 import styles from "./decision-simulator.module.css";
 
 type DecisionSimulatorProps = {
@@ -212,12 +213,12 @@ export function DecisionSimulator({
       <article className={styles.card}>
         <h2 className={styles.sectionTitle}>Simulation Results</h2>
         <p className={styles.advisoryText}>
-          This is advisory text, not a decision.
+          &#9432; This is advisory modelling, not a binding decision.
         </p>
 
         {hasNoAnalysis ? (
           <p className={styles.warningText}>
-            Analysis is required before simulation. Run analysis first.
+            &#9888; Analysis is required before simulation. Run analysis first.
           </p>
         ) : null}
 
@@ -266,11 +267,13 @@ export function DecisionSimulator({
                     {result.themesAddressed.length === 0 ? (
                       <p className={styles.mutedText}>No themes mapped.</p>
                     ) : (
-                      <ul className={styles.bulletList}>
+                      <div className={styles.themeTagRow}>
                         {result.themesAddressed.map((theme) => (
-                          <li key={theme}>{theme}</li>
+                          <span className={styles.themeTag} key={theme}>
+                            {theme}
+                          </span>
                         ))}
-                      </ul>
+                      </div>
                     )}
                   </div>
 
@@ -283,23 +286,30 @@ export function DecisionSimulator({
                         No group narratives returned.
                       </p>
                     ) : (
-                      <ul className={styles.bulletList}>
+                      <div className={styles.groupNarratives}>
                         {result.projectedGroupNarratives.map((item) => (
-                          <li key={`${result.proposalId}-${item.group}`}>
-                            <strong>{item.group}:</strong> {item.narrative}
-                          </li>
+                          <div
+                            className={styles.groupNarrativeItem}
+                            key={`${result.proposalId}-${item.group}`}
+                          >
+                            <span className={styles.groupLabel}>
+                              {item.group}
+                            </span>
+                            <MarkdownContent
+                              className={styles.groupNarrativeText}
+                              content={item.narrative}
+                            />
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     )}
                   </div>
 
                   <div className={styles.resultSection}>
-                    <h4 className={styles.resultHeading}>
-                      Trade-off narrative
-                    </h4>
-                    <p className={styles.tradeOffText}>
-                      {result.tradeOffNarrative}
-                    </p>
+                    <h4 className={styles.resultHeading}>Trade-off analysis</h4>
+                    <div className={styles.tradeOffBox}>
+                      <MarkdownContent content={result.tradeOffNarrative} />
+                    </div>
                   </div>
                 </article>
               );

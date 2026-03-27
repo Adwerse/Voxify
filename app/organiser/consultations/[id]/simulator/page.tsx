@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 
 import { getConsultationAnalysis } from "@/lib/analysis-store";
 import { getConsultation, listDecisions } from "@/lib/store";
-import { DecisionSimulator } from "../../../../../components/decision-simulator";
+import { DecisionSimulator } from "@/components/decision-simulator";
 
 import styles from "./page.module.css";
 

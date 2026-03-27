@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 
+import { MarkdownContent } from "./markdown-content";
 import styles from "./report-tabs.module.css";
 
 type ReportTabsProps = {
@@ -18,11 +19,7 @@ export function ReportTabs({
   const [activeTab, setActiveTab] = useState<ReportTab>("student");
 
   const activeContent = useMemo(() => {
-    if (activeTab === "student") {
-      return studentSummary;
-    }
-
-    return organiserBriefing;
+    return activeTab === "student" ? studentSummary : organiserBriefing;
   }, [activeTab, organiserBriefing, studentSummary]);
 
   return (
@@ -35,6 +32,7 @@ export function ReportTabs({
           role="tab"
           type="button"
         >
+          <span className={styles.tabIcon}>&#128100;</span>
           Student Summary
         </button>
         <button
@@ -44,11 +42,14 @@ export function ReportTabs({
           role="tab"
           type="button"
         >
+          <span className={styles.tabIcon}>&#128203;</span>
           Organiser Briefing
         </button>
       </div>
 
-      <p className={styles.content}>{activeContent}</p>
+      <div className={styles.content}>
+        <MarkdownContent content={activeContent} />
+      </div>
     </section>
   );
 }

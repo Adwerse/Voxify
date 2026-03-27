@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Link from "next/link";
 
 import { getConsultationAnalysis } from "@/lib/analysis-store";
@@ -43,6 +44,13 @@ export default function OrganiserDashboardPage() {
               getConsultationAnalysis(consultation.id),
             );
 
+            const pipeline = [
+              { label: "Collect", done: responseCount > 0 },
+              { label: "Analyse", done: hasAnalysis },
+              { label: "Act", done: hasAnalysis && proposalCount > 0 },
+              { label: "Close Loop", done: hasOutcome },
+            ];
+
             return (
               <article
                 className={styles.consultationCard}
@@ -57,26 +65,55 @@ export default function OrganiserDashboardPage() {
                       {consultation.description}
                     </p>
                   </div>
-                  <span className={styles.statusTag}>
+                  <span
+                    className={styles.statusTag}
+                    data-status={consultation.status}
+                  >
                     {consultation.status}
                   </span>
                 </header>
 
+                <div className={styles.pipelineRow}>
+                  {pipeline.map((step, i) => (
+                    <Fragment key={step.label}>
+                      <div
+                        className={`${styles.pipelineStep} ${step.done ? styles.stepDone : ""}`}
+                      >
+                        <span className={styles.stepDot}>
+                          {step.done ? "✓" : i + 1}
+                        </span>
+                        <span className={styles.stepLabel}>{step.label}</span>
+                      </div>
+                      {i < pipeline.length - 1 && (
+                        <div
+                          className={`${styles.pipelineConnector} ${step.done ? styles.connectorDone : ""}`}
+                        />
+                      )}
+                    </Fragment>
+                  ))}
+                </div>
+
                 <div className={styles.statsGrid}>
-                  <p>
-                    <strong>Responses:</strong> {responseCount}
-                  </p>
-                  <p>
-                    <strong>Proposals:</strong> {proposalCount}
-                  </p>
-                  <p>
-                    <strong>Outcome:</strong>{" "}
-                    {hasOutcome ? "Published" : "Pending"}
-                  </p>
-                  <p>
-                    <strong>Analysis:</strong>{" "}
-                    {hasAnalysis ? "Available" : "Not yet run"}
-                  </p>
+                  <div className={styles.statItem}>
+                    <span className={styles.statLabel}>Responses</span>
+                    <span className={styles.statValue}>{responseCount}</span>
+                  </div>
+                  <div className={styles.statItem}>
+                    <span className={styles.statLabel}>Proposals</span>
+                    <span className={styles.statValue}>{proposalCount}</span>
+                  </div>
+                  <div className={styles.statItem}>
+                    <span className={styles.statLabel}>Outcome</span>
+                    <span className={styles.statValue}>
+                      {hasOutcome ? "Published" : "Pending"}
+                    </span>
+                  </div>
+                  <div className={styles.statItem}>
+                    <span className={styles.statLabel}>Analysis</span>
+                    <span className={styles.statValue}>
+                      {hasAnalysis ? "Available" : "Not run"}
+                    </span>
+                  </div>
                 </div>
 
                 <div className={styles.actions}>

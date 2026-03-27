@@ -19,7 +19,7 @@ export default async function ConsultationPage(props: ConsultationPageProps) {
   }
 
   const appBaseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-  const formUrl = `${appBaseUrl}/consultation/${consultation.id}/form`;
+  const formUrl = `${appBaseUrl}/consultation/${consultation.id}/consent`;
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(formUrl)}`;
 
   return (
