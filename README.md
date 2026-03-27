@@ -1,25 +1,25 @@
 <a id="readme-top"></a>
 
 <br />
-<div align="center">
-	<a href="https://github.com/Adwerse/Voxify">
-		<img src="vote.png" alt="Voxify Logo" width="140" height="140">
-	</a>
+<div style="text-align: center;">
 
-    <h3 align="center">Voxify</h3>
+<a href="https://github.com/Adwerse/Voxify">
+<img src="public/vote.png" alt="Voxify Logo" width="140" height="140">
+</a>
 
-    <p align="center">
-    	A lightweight platform that turns student feedback into structured,
-    	equitable, and actionable intelligence across four stages:
-    	Collect → Analyse → Act → Close the Loop.
-    	<br />
-    	<a href="https://github.com/Adwerse/Voxify"><strong>Explore the repository »</strong></a>
-    	<br />
-    	<br />
-    	<a href="https://github.com/Adwerse/Voxify/issues/new?labels=bug">Report Bug</a>
-    	·
-    	<a href="https://github.com/Adwerse/Voxify/issues/new?labels=enhancement">Request Feature</a>
-    </p>
+<h3>Voxify</h3>
+
+<p>
+A lightweight platform that turns student feedback into structured,
+equitable, and actionable intelligence across four stages:
+Collect → Analyse → Act → Close the Loop.
+<br><br>
+<a href="https://github.com/Adwerse/Voxify"><strong>Explore the repository »</strong></a>
+<br><br>
+<a href="https://github.com/Adwerse/Voxify/issues/new?labels=bug">Report Bug</a>
+·
+<a href="https://github.com/Adwerse/Voxify/issues/new?labels=enhancement">Request Feature</a>
+</p>
 
 </div>
 
@@ -65,19 +65,9 @@
 
 ## About The Project
 
-Voxify is a Next.js App Router application for student consultation workflows.
+Voxify is a Next.js App for student consultation workflows.
 It captures feedback quickly, analyzes themes and representation, supports
 organizer decision simulation, and publishes transparent outcomes.
-
-The implementation is intentionally lightweight:
-
-- Flat JSON persistence under `data/`
-- Server-side AI orchestration in `lib/`
-- App Router route handlers under `app/api/`
-- Reusable presentation components under `components/`
-
-It is designed for demo speed and architectural clarity while keeping strict
-boundaries between UI rendering, orchestration, and domain logic.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -265,27 +255,6 @@ This executes `scripts/seed.sh`, which POSTs to `/api/dev/seed`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Step-by-Step Development Workflow
-
-Use this sequence for predictable implementation and review cycles:
-
-1. **Define data shape first**
-   - Update shared contracts in `types/Voxify.ts`.
-2. **Implement domain logic in `lib/`**
-   - Add or update storage (`lib/store.ts`), analytics, and AI adapters.
-3. **Add/adjust route handlers**
-   - Keep handlers focused on validation + orchestration.
-4. **Integrate UI pages/components**
-   - Consume typed API payloads; avoid direct AI calls in UI.
-5. **Seed realistic test/demo data**
-   - Use development seed route or `npm run seed:demo`.
-6. **Run quality checks**
-   - `npm run lint` then `npm run build`.
-7. **Re-test full 4-stage flow**
-   - Collect → Analyse → Act → Close the Loop.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 ## Data Model Summary
 
 Primary entities:
@@ -314,62 +283,6 @@ Prompt templates:
 - `prompts/conflicting-viewpoints.txt`
 - `prompts/equity-narrative.txt`
 - `prompts/decision-impact.txt`
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Security & Ethics Constraints
-
-- Do not add PII fields such as real names, emails, or device identifiers.
-- Keep representation analysis at group-level aggregates, not individual
-  profiling.
-- Keep AI output caveated for sample size and sampling bias.
-- Keep API keys in environment variables only.
-- Validate all route payloads before persisting.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Quality Checks
-
-Run before every merge:
-
-```bash
-npm run lint
-npm run build
-```
-
-Optional local run for production parity:
-
-```bash
-npm run start
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Deployment Notes
-
-This repository is compatible with standard Next.js deployment targets.
-
-Minimum production checklist:
-
-1. Set `ANTHROPIC_API_KEY` in deployment environment.
-2. Ensure writable storage strategy for JSON data files.
-3. Run build in CI: `npm run build`.
-4. Verify API endpoints and analysis persistence post-deploy.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Roadmap
-
-- [x] Consultation intake flow (consent + form + thanks)
-- [x] Organizer dashboard with analysis trigger
-- [x] Persistent analysis cache in `data/analysis.json`
-- [x] Representation and missing-voices analytics
-- [x] Decision proposal and simulation APIs
-- [x] Outcome publishing and student outcome page
-- [ ] Add auth and role-based access control
-- [ ] Replace JSON file store with durable database backend
-- [ ] Add automated tests for API handlers and analytics
-- [ ] Add observability for AI latency and parse fallbacks
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -406,7 +319,8 @@ See `LICENSE` for full text.
 
 ## Contact
 
-Project Owner: `Adwerse`
+- [@Adwerse](https://github.com/Adwerse)
+- [@vijethph](https://github.com/vijethph)
 
 Project Link: [https://github.com/Adwerse/Voxify](https://github.com/Adwerse/Voxify)
 
