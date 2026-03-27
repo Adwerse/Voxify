@@ -48,6 +48,58 @@ export type Analysis = {
   generated_at: string;
 };
 
+export type Analytics = {
+  poll_id: string;
+  generated_at: string;
+  participation: {
+    total_responses: number;
+    responses_per_age_band: Record<string, number>;
+    responses_per_group: Record<string, number>;
+  };
+  top_themes: AnalysisBreakdown[];
+  sentiment_distribution: {
+    positive: number;
+    neutral: number;
+    negative: number;
+  };
+  trend_indicators: {
+    compared_poll_id: string | null;
+    response_delta: number;
+    response_delta_pct: number;
+    top_theme_changed: boolean;
+  };
+  conflicting_viewpoints: Array<Record<string, unknown>>;
+  missing_voices: Record<string, unknown>;
+  impact: {
+    summary: string;
+    affected_groups: string[];
+    trade_offs: string[];
+  };
+};
+
+export type StudentReport = {
+  poll_id: string;
+  generated_at: string;
+  what_students_said: string;
+  top_themes: Array<{ theme: string; key_insight: string; quote: string }>;
+  sentiment_summary: string;
+  transparency_note: string;
+};
+
+export type InstitutionalReport = {
+  poll_id: string;
+  generated_at: string;
+  executive_summary: string;
+  key_themes: AnalysisBreakdown[];
+  demographic_breakdown: {
+    responses_per_age_band: Record<string, number>;
+    responses_per_group: Record<string, number>;
+  };
+  conflicting_viewpoints: Array<Record<string, unknown>>;
+  missing_voices: Record<string, unknown>;
+  suggested_considerations: string[];
+};
+
 export type TokenOutcome = {
   themes_summary: string;
   decision_made: boolean;
@@ -117,6 +169,18 @@ export function analysePoll(id: string | number): Promise<unknown> {
   return request(`/polls/${id}/analyse`, {
     method: "POST",
   });
+}
+
+export function fetchAnalytics(id: string | number): Promise<Analytics> {
+  return request<Analytics>(`/polls/${id}/analytics`);
+}
+
+export function fetchStudentReport(id: string | number): Promise<StudentReport> {
+  return request<StudentReport>(`/polls/${id}/reports/student`);
+}
+
+export function fetchInstitutionalReport(id: string | number): Promise<InstitutionalReport> {
+  return request<InstitutionalReport>(`/polls/${id}/reports/institutional`);
 }
 
 export function fetchTokenOutcome(

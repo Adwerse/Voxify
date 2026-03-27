@@ -74,3 +74,60 @@ class AnalysisRead(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class ParticipationMetrics(BaseModel):
+    total_responses: int
+    responses_per_age_band: dict[str, int]
+    responses_per_group: dict[str, int]
+
+
+class TrendIndicators(BaseModel):
+    compared_poll_id: str | None = None
+    response_delta: int = 0
+    response_delta_pct: float = 0.0
+    top_theme_changed: bool = False
+
+
+class ImpactInsight(BaseModel):
+    summary: str
+    affected_groups: list[str]
+    trade_offs: list[str]
+
+
+class AnalyticsRead(BaseModel):
+    poll_id: str
+    generated_at: datetime
+    participation: ParticipationMetrics
+    top_themes: list[dict[str, Any]]
+    sentiment_distribution: dict[str, float]
+    trend_indicators: TrendIndicators
+    conflicting_viewpoints: list[dict[str, Any]]
+    missing_voices: dict[str, Any]
+    impact: ImpactInsight
+
+
+class StudentThemeItem(BaseModel):
+    theme: str
+    key_insight: str
+    quote: str
+
+
+class StudentReportRead(BaseModel):
+    poll_id: str
+    generated_at: datetime
+    what_students_said: str
+    top_themes: list[StudentThemeItem]
+    sentiment_summary: str
+    transparency_note: str
+
+
+class InstitutionalReportRead(BaseModel):
+    poll_id: str
+    generated_at: datetime
+    executive_summary: str
+    key_themes: list[dict[str, Any]]
+    demographic_breakdown: dict[str, Any]
+    conflicting_viewpoints: list[dict[str, Any]]
+    missing_voices: dict[str, Any]
+    suggested_considerations: list[str]

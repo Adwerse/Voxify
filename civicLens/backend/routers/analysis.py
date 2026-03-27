@@ -10,7 +10,7 @@ from openai import OpenAI
 from sqlalchemy.orm import Session
 
 from db.database import Analysis, Poll, Response, get_db
-from models.schemas import AnalysisRead
+from models.schemas import AnalyticsRead, AnalysisRead, InstitutionalReportRead, StudentReportRead
 
 router = APIRouter(prefix="/polls", tags=["analysis"])
 
@@ -335,6 +335,193 @@ def _save_analysis(
 	return record
 
 
+def _group_distribution(responses: list[Response]) -> dict[str, int]:
+	distribution: dict[str, int] = {}
+	for item in responses:
+		group = (item.group_tag or "unspecified").strip() or "unspecified"
+		distribution[group] = distribution.get(group, 0) + 1
+	return dict(sorted(distribution.items(), key=lambda pair: pair[1], reverse=True))
+
+
+def _sentiment_distribution(sentiment_summary: dict[str, Any], themes: list[dict[str, Any]]) -> dict[str, float]:
+	sentiment_by_theme = sentiment_summary.get("sentiment_by_theme", {}) if isinstance(sentiment_summary, dict) else {}
+	if not isinstance(sentiment_by_theme, dict) or not themes:
+		return {"positive": 0.0, "neutral": 100.0, "negative": 0.0}
+
+	counts = {"positive": 0, "neutral": 0, "negative": 0}
+	for theme in themes:
+		theme_id = str(theme.get("id", ""))
+		value = str(sentiment_by_theme.get(theme_id, "neutral")).lower()
+		if value == "mixed":
+			counts["positive"] += 1
+			counts["negative"] += 1
+		elif value in counts:
+			counts[value] += 1
+		else:
+			counts["neutral"] += 1
+
+	total = max(sum(counts.values()), 1)
+	return {
+		"positive": round((counts["positive"] / total) * 100, 2),
+		"neutral": round((counts["neutral"] / total) * 100, 2),
+		"negative": round((counts["negative"] / total) * 100, 2),
+	}
+
+
+def _trend_indicators(db: Session, poll: Poll, current_themes: list[dict[str, Any]], response_count: int) -> dict[str, Any]:
+	previous_poll = (
+		db.query(Poll)
+		.filter(
+			Poll.organisation == poll.organisation,
+			Poll.id != poll.id,
+			Poll.created_at < poll.created_at,
+		)
+		.order_by(Poll.created_at.desc())
+		.first()
+	)
+
+	if not previous_poll:
+		return {
+			"compared_poll_id": None,
+			"response_delta": 0,
+			"response_delta_pct": 0.0,
+			"top_theme_changed": False,
+		}
+
+	previous_count = db.query(Response).filter(Response.poll_id == previous_poll.id).count()
+	response_delta = response_count - previous_count
+	response_delta_pct = round((response_delta / previous_count) * 100, 2) if previous_count > 0 else 0.0
+
+	previous_analysis = db.query(Analysis).filter(Analysis.poll_id == previous_poll.id).first()
+	current_top = str(current_themes[0].get("label", "")).strip() if current_themes else ""
+	previous_top = ""
+	if previous_analysis and isinstance(previous_analysis.themes, dict):
+		prev_themes = previous_analysis.themes.get("themes", [])
+		if isinstance(prev_themes, list) and prev_themes:
+			previous_top = str(prev_themes[0].get("label", "")).strip()
+
+	return {
+		"compared_poll_id": previous_poll.id,
+		"response_delta": response_delta,
+		"response_delta_pct": response_delta_pct,
+		"top_theme_changed": bool(current_top and previous_top and current_top != previous_top),
+	}
+
+
+def _build_analytics_payload(db: Session, poll: Poll, analysis: Analysis, responses: list[Response]) -> dict[str, Any]:
+	themes_raw = analysis.themes if isinstance(analysis.themes, dict) else {}
+	themes = themes_raw.get("themes", []) if isinstance(themes_raw.get("themes", []), list) else []
+
+	participation = {
+		"total_responses": len(responses),
+		"responses_per_age_band": _age_distribution_counts(responses),
+		"responses_per_group": _group_distribution(responses),
+	}
+
+	sentiment_summary = analysis.sentiment_summary if isinstance(analysis.sentiment_summary, dict) else {}
+	trend = _trend_indicators(db, poll, themes, len(responses))
+	conflicts = analysis.conflicting_viewpoints if isinstance(analysis.conflicting_viewpoints, list) else []
+	missing_voices = analysis.missing_voices if isinstance(analysis.missing_voices, dict) else {}
+
+	affected_groups = [
+		str(item.get("group", "")).strip()
+		for item in missing_voices.get("underrepresented_groups", [])
+		if isinstance(item, dict) and str(item.get("group", "")).strip()
+	]
+
+	trade_offs = [
+		f"{item.get('topic', 'Unknown topic')}: balance {item.get('position_a', 'position A')} vs {item.get('position_b', 'position B')}"
+		for item in conflicts[:3]
+		if isinstance(item, dict)
+	]
+
+	return {
+		"poll_id": poll.id,
+		"generated_at": analysis.generated_at,
+		"participation": participation,
+		"top_themes": themes[:6],
+		"sentiment_distribution": _sentiment_distribution(sentiment_summary, themes),
+		"trend_indicators": trend,
+		"conflicting_viewpoints": conflicts,
+		"missing_voices": missing_voices,
+		"impact": {
+			"summary": "Potential policy impact is highest in the top two themes and among underrepresented cohorts.",
+			"affected_groups": affected_groups,
+			"trade_offs": trade_offs,
+		},
+	}
+
+
+def _age_distribution_counts(responses: list[Response]) -> dict[str, int]:
+	buckets: dict[str, int] = {"16-17": 0, "18-21": 0, "22-25": 0, "25+": 0}
+	for item in responses:
+		if item.age_band in buckets:
+			buckets[item.age_band] += 1
+	return buckets
+
+
+def _build_student_report(analytics: dict[str, Any]) -> dict[str, Any]:
+	themes = analytics.get("top_themes", []) if isinstance(analytics.get("top_themes"), list) else []
+	theme_items: list[dict[str, str]] = []
+	for item in themes[:5]:
+		if not isinstance(item, dict):
+			continue
+		quotes = item.get("representative_quotes", [])
+		quote = str(quotes[0]) if isinstance(quotes, list) and quotes else "No direct quote available."
+		label = str(item.get("label", "Theme"))
+		response_count = int(item.get("response_count", 0))
+		theme_items.append(
+			{
+				"theme": label,
+				"key_insight": f"{response_count} students mentioned this theme.",
+				"quote": quote,
+			}
+		)
+
+	sentiment = analytics.get("sentiment_distribution", {})
+	positive = float(sentiment.get("positive", 0.0)) if isinstance(sentiment, dict) else 0.0
+	neutral = float(sentiment.get("neutral", 0.0)) if isinstance(sentiment, dict) else 0.0
+	negative = float(sentiment.get("negative", 0.0)) if isinstance(sentiment, dict) else 0.0
+
+	return {
+		"poll_id": analytics.get("poll_id"),
+		"generated_at": analytics.get("generated_at"),
+		"what_students_said": "Students shared clear priorities around day-to-day learning experience, support, and fairness.",
+		"top_themes": theme_items,
+		"sentiment_summary": f"Overall mood: {positive}% positive, {neutral}% neutral, {negative}% negative.",
+		"transparency_note": "This summary reflects submitted responses and may not represent every student group equally.",
+	}
+
+
+def _build_institutional_report(analytics: dict[str, Any]) -> dict[str, Any]:
+	themes = analytics.get("top_themes", []) if isinstance(analytics.get("top_themes"), list) else []
+	participation = analytics.get("participation", {}) if isinstance(analytics.get("participation"), dict) else {}
+	missing_voices = analytics.get("missing_voices", {}) if isinstance(analytics.get("missing_voices"), dict) else {}
+	conflicts = analytics.get("conflicting_viewpoints", []) if isinstance(analytics.get("conflicting_viewpoints"), list) else []
+
+	considerations = [
+		"Prioritise interventions that address the top two themes while monitoring equity impact.",
+		"Run a targeted follow-up campaign for underrepresented groups before final decisions.",
+	]
+
+	if conflicts:
+		considerations.append("Design options that explicitly acknowledge the strongest trade-offs reported by students.")
+
+	return {
+		"poll_id": analytics.get("poll_id"),
+		"generated_at": analytics.get("generated_at"),
+		"executive_summary": "This report translates student feedback into structured insights to support transparent institutional decision-making.",
+		"key_themes": themes,
+		"demographic_breakdown": {
+			"responses_per_age_band": participation.get("responses_per_age_band", {}),
+			"responses_per_group": participation.get("responses_per_group", {}),
+		},
+		"conflicting_viewpoints": conflicts,
+		"missing_voices": missing_voices,
+		"suggested_considerations": considerations,
+	}
+
+
 @router.post("/{poll_id}/analyse")
 def analyse_poll(poll_id: str, db: Session = Depends(get_db)) -> JSONResponse:
 	poll = db.query(Poll).filter(Poll.id == poll_id).first()
@@ -577,3 +764,47 @@ def get_analysis(poll_id: str, db: Session = Depends(get_db)) -> Analysis:
 	if not analysis:
 		raise HTTPException(status_code=404, detail="Analysis not found for this poll")
 	return analysis
+
+
+@router.get("/{poll_id}/analytics", response_model=AnalyticsRead)
+def get_analytics(poll_id: str, db: Session = Depends(get_db)) -> dict[str, Any]:
+	poll = db.query(Poll).filter(Poll.id == poll_id).first()
+	if not poll:
+		raise HTTPException(status_code=404, detail="Poll not found")
+
+	analysis = db.query(Analysis).filter(Analysis.poll_id == poll_id).first()
+	if not analysis:
+		raise HTTPException(status_code=404, detail="Analysis not found for this poll")
+
+	responses = db.query(Response).filter(Response.poll_id == poll_id).all()
+	return _build_analytics_payload(db=db, poll=poll, analysis=analysis, responses=responses)
+
+
+@router.get("/{poll_id}/reports/student", response_model=StudentReportRead)
+def get_student_report(poll_id: str, db: Session = Depends(get_db)) -> dict[str, Any]:
+	poll = db.query(Poll).filter(Poll.id == poll_id).first()
+	if not poll:
+		raise HTTPException(status_code=404, detail="Poll not found")
+
+	analysis = db.query(Analysis).filter(Analysis.poll_id == poll_id).first()
+	if not analysis:
+		raise HTTPException(status_code=404, detail="Analysis not found for this poll")
+
+	responses = db.query(Response).filter(Response.poll_id == poll_id).all()
+	analytics = _build_analytics_payload(db=db, poll=poll, analysis=analysis, responses=responses)
+	return _build_student_report(analytics)
+
+
+@router.get("/{poll_id}/reports/institutional", response_model=InstitutionalReportRead)
+def get_institutional_report(poll_id: str, db: Session = Depends(get_db)) -> dict[str, Any]:
+	poll = db.query(Poll).filter(Poll.id == poll_id).first()
+	if not poll:
+		raise HTTPException(status_code=404, detail="Poll not found")
+
+	analysis = db.query(Analysis).filter(Analysis.poll_id == poll_id).first()
+	if not analysis:
+		raise HTTPException(status_code=404, detail="Analysis not found for this poll")
+
+	responses = db.query(Response).filter(Response.poll_id == poll_id).all()
+	analytics = _build_analytics_payload(db=db, poll=poll, analysis=analysis, responses=responses)
+	return _build_institutional_report(analytics)
