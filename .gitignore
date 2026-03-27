@@ -440,6 +440,6 @@ $RECYCLE.BIN/
 *.txt
 **/*.md
 !README.md
-!finalspecification.md
+!projectspecification.md
 docs/
 
