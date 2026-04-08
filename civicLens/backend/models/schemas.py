@@ -8,6 +8,46 @@ ModeType = Literal["standard", "under16"]
 AgeBandType = Literal["16-17", "18-21", "22-25", "25+"]
 
 
+class AuthRegisterRequest(BaseModel):
+    name: str = Field(min_length=2, max_length=120)
+    email: str = Field(min_length=5, max_length=200)
+    student_id: str = Field(min_length=5, max_length=40)
+    cohort_year: str | None = Field(default=None, max_length=40)
+    demographic_band: str | None = Field(default=None, max_length=40)
+
+
+class AuthRegisterResponse(BaseModel):
+    emoji_id: str
+    verified: bool
+    token: str
+
+
+class AuthMeResponse(BaseModel):
+    emoji_id: str
+    verified: bool
+    cohort: str
+
+
+class SessionClaims(BaseModel):
+    emoji_id: str
+    verified: bool
+    cohort: str
+    iat: int
+    exp: int
+
+
+class AdminIdentityRead(BaseModel):
+    emoji_id: str
+    verified: bool
+    demographic_band: str
+
+
+class VerifiedVoterRead(BaseModel):
+    emoji_id: str
+    verified: bool
+    demographic_band: str
+
+
 class PollBase(BaseModel):
     title: str = Field(min_length=3, max_length=200)
     question: str = Field(min_length=5, max_length=2000)
@@ -40,7 +80,6 @@ class PollCreateResponse(BaseModel):
 
 
 class ResponseCreate(BaseModel):
-    nickname: str | None = Field(default=None, max_length=80)
     age_band: AgeBandType | None = None
     group_tag: str | None = Field(default=None, max_length=40)
     response_text: str = Field(min_length=1, max_length=4000)

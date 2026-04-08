@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from db.database import Analysis, Poll, Response, SessionLocal, init_db
+from db.database import Analysis, Identity, Poll, Response, SessionLocal, init_db
 
 
 def seed() -> None:
@@ -369,9 +369,23 @@ def seed() -> None:
                         group = "demo"
                     else:
                         band, text, group = row
+
+                    demo_emoji = f"🧪🌿#{1000 + (int(sample['id']) * 100) + idx}"
+                    identity = db.query(Identity).filter(Identity.emoji_id == demo_emoji).first()
+                    if not identity:
+                        identity = Identity(
+                            emoji_id=demo_emoji,
+                            verified=True,
+                            cohort_year=band,
+                            demo_group=group,
+                        )
+                        db.add(identity)
+                        db.flush()
+
                     db.add(
                         Response(
                             poll_id=poll.id,
+                            emoji_id=demo_emoji,
                             nickname=f"student-{idx + 1}" if idx % 2 == 0 else None,
                             age_band=band,
                             group_tag=group,

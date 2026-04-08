@@ -9,7 +9,9 @@ import {
   fetchAnalytics,
   fetchPolls,
   fetchStudentReport,
+  fetchVerifiedVoters,
   type StudentReport,
+  type VerifiedVoter,
 } from "@/lib/api";
 import { CreatePollModal } from "@/components/dashboard/CreatePollModal";
 import { DashboardSkeleton } from "@/components/dashboard/dashboard-skeleton";
@@ -82,6 +84,12 @@ export function CouncilDashboard() {
     { shouldRetryOnError: false }
   );
 
+  const { data: verifiedVoters = [] } = useSWR(
+    ["verified-voters", pollId],
+    () => fetchVerifiedVoters(pollId),
+    { shouldRetryOnError: false }
+  );
+
   const themes = useMemo<Theme[]>(() => {
     if (!Array.isArray(analytics?.top_themes)) return [];
     return analytics.top_themes as Theme[];
@@ -107,6 +115,7 @@ export function CouncilDashboard() {
   const responsesPerGroup = analytics?.participation?.responses_per_group || {};
   const missingGroups =
     (analytics?.missing_voices as { underrepresented_groups?: Array<{ group: string; gap: number }> })?.underrepresented_groups || [];
+  const voterPreview = (verifiedVoters as VerifiedVoter[]).slice(0, 10);
 
   const createdAt = currentPoll?.created_at ? new Date(currentPoll.created_at).getTime() : Date.now();
   const generatedAt = analytics?.generated_at ? new Date(analytics.generated_at).getTime() : Date.now();
@@ -300,6 +309,24 @@ export function CouncilDashboard() {
               </div>
             </DemoCard>
           </div>
+
+          <DemoCard
+            title="Verified emoji voters"
+            subtitle={`${verifiedVoters.length} verified identities linked to this poll`}
+          >
+            <div className="space-y-2">
+              {voterPreview.length === 0 ? (
+                <p className="text-sm text-zinc-500">No verified emoji voters yet.</p>
+              ) : (
+                voterPreview.map((voter) => (
+                  <div key={voter.emoji_id} className="flex items-center justify-between rounded-xl border border-zinc-100 px-3 py-2">
+                    <p className="text-sm text-zinc-900">{voter.emoji_id}</p>
+                    <p className="text-xs text-zinc-500">{voter.demographic_band} · ✓</p>
+                  </div>
+                ))
+              )}
+            </div>
+          </DemoCard>
 
           {missingGroups.length > 0 ? (
             <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-800 shadow-sm">

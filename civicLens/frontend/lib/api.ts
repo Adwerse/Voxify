@@ -10,8 +10,33 @@ export type Poll = {
   created_at: string;
 };
 
+export type AuthRegisterPayload = {
+  name: string;
+  email: string;
+  student_id: string;
+  cohort_year?: string;
+  demographic_band?: string;
+};
+
+export type AuthRegisterResult = {
+  emoji_id: string;
+  verified: boolean;
+  token: string;
+};
+
+export type AuthMe = {
+  emoji_id: string;
+  verified: boolean;
+  cohort: string;
+};
+
+export type VerifiedVoter = {
+  emoji_id: string;
+  verified: boolean;
+  demographic_band: string;
+};
+
 export type ResponsePayload = {
-  nickname?: string;
   age_band?: "16-17" | "18-21" | "22-25" | "25+";
   group_tag?: string;
   response_text: string;
@@ -125,11 +150,13 @@ export type PollCreateResult = {
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
+  const headers = new Headers(init?.headers || undefined);
+  if (init?.body && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+
   const res = await fetch(`${API_BASE}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-      ...(init?.headers || {}),
-    },
+    headers,
     ...init,
     cache: "no-store",
   });
@@ -150,11 +177,33 @@ export function fetchPoll(id: string | number): Promise<Poll> {
   return request<Poll>(`/polls/${id}`);
 }
 
-export function submitResponse(pollId: string | number, payload: ResponsePayload): Promise<ResponseToken> {
-  return request<ResponseToken>(`/polls/${pollId}/respond`, {
+export function registerAnonymousIdentity(payload: AuthRegisterPayload): Promise<AuthRegisterResult> {
+  return request<AuthRegisterResult>("/auth/register", {
     method: "POST",
     body: JSON.stringify(payload),
   });
+}
+
+export function fetchAuthMe(token: string): Promise<AuthMe> {
+  return request<AuthMe>("/auth/me", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+}
+
+export function submitResponse(pollId: string | number, payload: ResponsePayload, token: string): Promise<ResponseToken> {
+  return request<ResponseToken>(`/polls/${pollId}/respond`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+export function fetchVerifiedVoters(pollId: string | number): Promise<VerifiedVoter[]> {
+  return request<VerifiedVoter[]>(`/polls/${pollId}/verified-voters`);
 }
 
 export function fetchResponseStats(id: string | number): Promise<ResponseStats> {

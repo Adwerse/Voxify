@@ -6,6 +6,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from db.database import init_db
 from routers.analysis import router as analysis_router
+from routers.auth import router as auth_router
 from routers.polls import router as polls_router
 
 load_dotenv()
@@ -36,3 +37,4 @@ def read_root() -> dict[str, str]:
 
 app.include_router(polls_router)
 app.include_router(analysis_router)
+app.include_router(auth_router)
