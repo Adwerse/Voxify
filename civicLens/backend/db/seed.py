@@ -1,10 +1,18 @@
+import os
+import random
+from copy import deepcopy
 from uuid import uuid4
+
+from sqlalchemy.orm import Session
 
 from db.database import Analysis, Identity, Poll, Response, SessionLocal, User, init_db
 from security import encrypt_pii, generate_emoji_identity, hash_identifier, normalize_email, normalize_student_id
 
 
-def _seed_demo_accounts(db: SessionLocal) -> dict[str, str]:
+AGE_BANDS = ["16-17", "18-21", "22-25", "25+"]
+
+
+def _seed_demo_accounts(db: Session) -> dict[str, str]:
     demo_accounts = [
         {
             "key": "aisling",
@@ -163,6 +171,160 @@ def _seed_demo_accounts(db: SessionLocal) -> dict[str, str]:
     return emoji_by_key
 
 
+def _demo_rng() -> random.Random:
+    rng = random.Random()
+    configured_seed = (os.getenv("DEMO_RANDOM_SEED", "") or "").strip()
+
+    if configured_seed:
+        try:
+            rng.seed(int(configured_seed))
+        except ValueError:
+            rng.seed(configured_seed)
+
+    return rng
+
+
+def _noise_suffixes() -> list[str]:
+    return [
+        "This keeps coming up in student conversations.",
+        "This would be a visible win this semester.",
+        "Please prioritize this before finals.",
+        "It affects both wellbeing and academic performance.",
+        "This is especially difficult for commuters.",
+        "A small pilot could prove impact quickly.",
+        "This matters across year groups, not just first years.",
+        "If solved, trust in student consultation would improve a lot.",
+        "We would notice this change immediately.",
+        "Please publish progress transparently if this moves forward.",
+    ]
+
+
+def _build_theme_payload(
+    sample: dict,
+    generated: list[dict[str, str]],
+    total_responses: int,
+) -> list[dict]:
+    template_themes = sample.get("themes", {}).get("themes", [])
+    theme_map = {
+        item.get("id", ""): {
+            "id": item.get("id", ""),
+            "label": item.get("label", "Theme"),
+            "response_count": 0,
+            "percentage": 0.0,
+            "representative_quotes": [],
+            "age_band_breakdown": {band: 0 for band in AGE_BANDS},
+        }
+        for item in template_themes
+        if isinstance(item, dict) and item.get("id")
+    }
+
+    for item in generated:
+        theme_id = item["theme_id"]
+        payload = theme_map.get(theme_id)
+        if not payload:
+            continue
+
+        payload["response_count"] += 1
+        age_band = item["age_band"]
+        if age_band in payload["age_band_breakdown"]:
+            payload["age_band_breakdown"][age_band] += 1
+
+        quotes = payload["representative_quotes"]
+        if len(quotes) < 2 and item["response_text"] not in quotes:
+            quotes.append(item["response_text"])
+
+    for payload in theme_map.values():
+        payload["percentage"] = round((payload["response_count"] / max(total_responses, 1)) * 100, 2)
+
+    return sorted(theme_map.values(), key=lambda record: record["response_count"], reverse=True)
+
+
+def _build_missing_voices_payload(
+    institution_demographics: dict[str, int],
+    generated: list[dict[str, str]],
+    top_theme_labels: list[str],
+) -> dict:
+    age_counts = {band: 0 for band in AGE_BANDS}
+    for item in generated:
+        if item["age_band"] in age_counts:
+            age_counts[item["age_band"]] += 1
+
+    total = max(sum(age_counts.values()), 1)
+    underrepresented = []
+
+    for band, institution_share in institution_demographics.items():
+        response_share = round((age_counts.get(band, 0) / total) * 100, 2)
+        gap = round(float(institution_share) - response_share, 2)
+        if gap > 15:
+            underrepresented.append(
+                {
+                    "group": band,
+                    "institution_share": round(float(institution_share), 2),
+                    "response_share": response_share,
+                    "gap": gap,
+                    "affected_themes": top_theme_labels[:2] if top_theme_labels else ["General student priorities"],
+                    "equity_note": f"{band} students are meaningfully underrepresented in this consultation wave.",
+                }
+            )
+
+    if not underrepresented:
+        representation_health = "good"
+        recommendation = "Representation is currently balanced against the configured baseline demographics."
+    elif len(underrepresented) == 1:
+        representation_health = "moderate"
+        recommendation = "Run one targeted outreach push for the identified underrepresented cohort."
+    else:
+        representation_health = "poor"
+        recommendation = "Run focused outreach across multiple underrepresented cohorts before final policy decisions."
+
+    return {
+        "underrepresented_groups": underrepresented,
+        "representation_health": representation_health,
+        "recommendation": recommendation,
+    }
+
+
+def _generate_poll_responses(
+    sample: dict,
+    emoji_by_key: dict[str, str],
+    rng: random.Random,
+    target_count: int,
+) -> tuple[list[dict[str, str]], list[dict], dict]:
+    templates = sample.get("responses", [])
+    suffixes = _noise_suffixes()
+    generated: list[dict[str, str]] = []
+
+    while len(generated) < target_count:
+        account_key, age_band, group_tag, base_text, theme_id = rng.choice(templates)
+        emoji_id = emoji_by_key.get(account_key)
+        if not emoji_id:
+            continue
+
+        response_text = base_text
+        if rng.random() < 0.55:
+            response_text = f"{base_text} {rng.choice(suffixes)}"
+
+        generated.append(
+            {
+                "emoji_id": emoji_id,
+                "age_band": age_band,
+                "group_tag": group_tag,
+                "response_text": response_text,
+                "theme_id": theme_id,
+            }
+        )
+
+    themes = _build_theme_payload(sample=sample, generated=generated, total_responses=target_count)
+    top_theme_labels = [item.get("label", "") for item in themes if item.get("label")]
+    missing_voices = _build_missing_voices_payload(
+        institution_demographics=sample.get("institution_demographics", {}),
+        generated=generated,
+        top_theme_labels=top_theme_labels,
+    )
+
+    return generated, themes, missing_voices
+
+
 def _poll_samples() -> list[dict]:
     return [
         {
@@ -173,14 +335,14 @@ def _poll_samples() -> list[dict]:
             "mode": "standard",
             "institution_demographics": {"16-17": 4, "18-21": 68, "22-25": 20, "25+": 8},
             "responses": [
-                ("aisling", "18-21", "trinity_hall", "Keep Berkeley open until 1am during exam weeks."),
-                ("cian", "18-21", "commuter", "If library closes at 10pm I lose two study hours after my commute."),
-                ("nora", "22-25", "international", "Reserve more silent seats near sockets, they are full by noon."),
-                ("liam", "22-25", "stem", "I need late spaces for coding and report writing before lab deadlines."),
-                ("sarah", "25+", "mature_learner", "Quiet zones should be monitored because noise rises after 8pm."),
-                ("priya", "18-21", "disability_support", "Priority seating for accessibility needs should be clearly marked."),
-                ("ema", "18-21", "first_generation", "Longer hours matter, but safe routes home matter just as much."),
-                ("hugo", "22-25", "part_time_worker", "After work shifts I only get meaningful study time after 9pm."),
+                ("aisling", "18-21", "trinity_hall", "Keep Berkeley open until 1am during exam weeks.", "theme_1"),
+                ("cian", "18-21", "commuter", "If library closes at 10pm I lose two study hours after my commute.", "theme_3"),
+                ("nora", "22-25", "international", "Reserve more silent seats near sockets, they are full by noon.", "theme_2"),
+                ("liam", "22-25", "stem", "I need late spaces for coding and report writing before lab deadlines.", "theme_1"),
+                ("sarah", "25+", "mature_learner", "Quiet zones should be monitored because noise rises after 8pm.", "theme_2"),
+                ("priya", "18-21", "disability_support", "Priority seating for accessibility needs should be clearly marked.", "theme_2"),
+                ("ema", "18-21", "first_generation", "Longer hours matter, but safe routes home matter just as much.", "theme_3"),
+                ("hugo", "22-25", "part_time_worker", "After work shifts I only get meaningful study time after 9pm.", "theme_1"),
             ],
             "themes": {
                 "themes": [
@@ -269,14 +431,14 @@ def _poll_samples() -> list[dict]:
             "mode": "standard",
             "institution_demographics": {"16-17": 4, "18-21": 65, "22-25": 23, "25+": 8},
             "responses": [
-                ("eoin", "16-17", "access_programme", "Crossing Pearse Street after evening study still feels risky."),
-                ("cian", "18-21", "commuter", "A reliable 11pm shuttle would help commuters massively."),
-                ("declan", "18-21", "societies", "Lighting from Front Gate to Pearse Station has dark patches."),
-                ("priya", "18-21", "disability_support", "Emergency contact points need better signage and audio support."),
-                ("ronan", "18-21", "sports_clubs", "After training, buses are irregular and the wait feels unsafe."),
-                ("tom", "22-25", "research_student", "A staffed safe-walk programme would increase confidence at night."),
-                ("fatima", "18-21", "international", "New students need a simple map of safe late routes."),
-                ("nora", "22-25", "international", "Push alerts about disruptions would reduce uncertainty and panic."),
+                ("eoin", "16-17", "access_programme", "Crossing Pearse Street after evening study still feels risky.", "theme_1"),
+                ("cian", "18-21", "commuter", "A reliable 11pm shuttle would help commuters massively.", "theme_2"),
+                ("declan", "18-21", "societies", "Lighting from Front Gate to Pearse Station has dark patches.", "theme_1"),
+                ("priya", "18-21", "disability_support", "Emergency contact points need better signage and audio support.", "theme_3"),
+                ("ronan", "18-21", "sports_clubs", "After training, buses are irregular and the wait feels unsafe.", "theme_2"),
+                ("tom", "22-25", "research_student", "A staffed safe-walk programme would increase confidence at night.", "theme_1"),
+                ("fatima", "18-21", "international", "New students need a simple map of safe late routes.", "theme_1"),
+                ("nora", "22-25", "international", "Push alerts about disruptions would reduce uncertainty and panic.", "theme_3"),
             ],
             "themes": {
                 "themes": [
@@ -365,14 +527,14 @@ def _poll_samples() -> list[dict]:
             "mode": "standard",
             "institution_demographics": {"16-17": 6, "18-21": 54, "22-25": 28, "25+": 12},
             "responses": [
-                ("aisling", "18-21", "trinity_hall", "Meal deal prices are still too high by mid-semester."),
-                ("declan", "18-21", "societies", "Vegan options run out early and portions vary too much."),
-                ("ema", "18-21", "first_generation", "A low-cost hot meal option every day would reduce stress."),
-                ("ronan", "18-21", "sports_clubs", "Athletes need affordable high-protein options after training."),
-                ("nora", "22-25", "international", "Label allergens more clearly near each counter."),
-                ("hugo", "22-25", "part_time_worker", "Queue times at peak lunch make short breaks unusable."),
-                ("sarah", "25+", "mature_learner", "Keep quality high even if discounts are targeted by need."),
-                ("priya", "18-21", "disability_support", "Online pre-order would help students managing fatigue and pain."),
+                ("aisling", "18-21", "trinity_hall", "Meal deal prices are still too high by mid-semester.", "theme_1"),
+                ("declan", "18-21", "societies", "Vegan options run out early and portions vary too much.", "theme_2"),
+                ("ema", "18-21", "first_generation", "A low-cost hot meal option every day would reduce stress.", "theme_1"),
+                ("ronan", "18-21", "sports_clubs", "Athletes need affordable high-protein options after training.", "theme_1"),
+                ("nora", "22-25", "international", "Label allergens more clearly near each counter.", "theme_2"),
+                ("hugo", "22-25", "part_time_worker", "Queue times at peak lunch make short breaks unusable.", "theme_3"),
+                ("sarah", "25+", "mature_learner", "Keep quality high even if discounts are targeted by need.", "theme_2"),
+                ("priya", "18-21", "disability_support", "Online pre-order would help students managing fatigue and pain.", "theme_3"),
             ],
             "themes": {
                 "themes": [
@@ -470,14 +632,14 @@ def _poll_samples() -> list[dict]:
             "mode": "standard",
             "institution_demographics": {"16-17": 30, "18-21": 46, "22-25": 18, "25+": 6},
             "responses": [
-                ("eoin", "16-17", "access_programme", "Back-to-back classes across campus leave no transition time."),
-                ("cian", "18-21", "commuter", "8am starts and 6pm finishes make commuting days unsustainable."),
-                ("liam", "22-25", "stem", "Large assignment deadlines land in the same 72-hour window."),
-                ("sarah", "25+", "mature_learner", "Part-time students need timetable certainty at least two weeks ahead."),
-                ("tom", "22-25", "research_student", "Seminar slots move too often for those with lab schedules."),
-                ("fatima", "18-21", "international", "A weekly schedule digest would reduce confusion and missed sessions."),
-                ("hugo", "22-25", "part_time_worker", "Please avoid rotating lecture times every week for core modules."),
-                ("ema", "18-21", "first_generation", "When three deadlines hit one day, feedback quality drops for everyone."),
+                ("eoin", "16-17", "access_programme", "Back-to-back classes across campus leave no transition time.", "theme_3"),
+                ("cian", "18-21", "commuter", "8am starts and 6pm finishes make commuting days unsustainable.", "theme_3"),
+                ("liam", "22-25", "stem", "Large assignment deadlines land in the same 72-hour window.", "theme_1"),
+                ("sarah", "25+", "mature_learner", "Part-time students need timetable certainty at least two weeks ahead.", "theme_2"),
+                ("tom", "22-25", "research_student", "Seminar slots move too often for those with lab schedules.", "theme_2"),
+                ("fatima", "18-21", "international", "A weekly schedule digest would reduce confusion and missed sessions.", "theme_2"),
+                ("hugo", "22-25", "part_time_worker", "Please avoid rotating lecture times every week for core modules.", "theme_2"),
+                ("ema", "18-21", "first_generation", "When three deadlines hit one day, feedback quality drops for everyone.", "theme_1"),
             ],
             "themes": {
                 "themes": [
@@ -575,14 +737,14 @@ def _poll_samples() -> list[dict]:
             "mode": "standard",
             "institution_demographics": {"16-17": 8, "18-21": 44, "22-25": 38, "25+": 10},
             "responses": [
-                ("aisling", "18-21", "trinity_hall", "Small societies need faster micro-grants for event basics."),
-                ("declan", "18-21", "societies", "Room booking is the biggest blocker for inclusive events."),
-                ("priya", "18-21", "disability_support", "Every society event page should include accessibility details by default."),
-                ("ronan", "18-21", "sports_clubs", "Late evening slots exclude students with jobs or care duties."),
-                ("nora", "22-25", "international", "Welcome events should include clear no-alcohol options and pricing info."),
-                ("sarah", "25+", "mature_learner", "Postgrad-friendly event times are rare and need explicit planning."),
-                ("eoin", "16-17", "access_programme", "Intro events should avoid clashing with core tutorial blocks."),
-                ("fatima", "18-21", "international", "A shared event calendar with filters would help students find relevant communities."),
+                ("aisling", "18-21", "trinity_hall", "Small societies need faster micro-grants for event basics.", "theme_2"),
+                ("declan", "18-21", "societies", "Room booking is the biggest blocker for inclusive events.", "theme_2"),
+                ("priya", "18-21", "disability_support", "Every society event page should include accessibility details by default.", "theme_1"),
+                ("ronan", "18-21", "sports_clubs", "Late evening slots exclude students with jobs or care duties.", "theme_3"),
+                ("nora", "22-25", "international", "Welcome events should include clear no-alcohol options and pricing info.", "theme_1"),
+                ("sarah", "25+", "mature_learner", "Postgrad-friendly event times are rare and need explicit planning.", "theme_3"),
+                ("eoin", "16-17", "access_programme", "Intro events should avoid clashing with core tutorial blocks.", "theme_3"),
+                ("fatima", "18-21", "international", "A shared event calendar with filters would help students find relevant communities.", "theme_3"),
             ],
             "themes": {
                 "themes": [
@@ -689,8 +851,10 @@ def seed(reset_demo_data: bool = True) -> None:
 
         emoji_by_key = _seed_demo_accounts(db)
         samples = _poll_samples()
+        rng = _demo_rng()
+        target_counts = rng.sample(range(20, 111), k=len(samples))
 
-        for sample in samples:
+        for idx, sample in enumerate(samples):
             poll = db.query(Poll).filter(Poll.id == sample["id"]).first()
             if not poll:
                 poll = Poll(
@@ -717,38 +881,53 @@ def seed(reset_demo_data: bool = True) -> None:
 
             db.query(Response).filter(Response.poll_id == poll.id).delete(synchronize_session=False)
 
-            for account_key, age_band, group_tag, response_text in sample["responses"]:
-                emoji_id = emoji_by_key.get(account_key)
-                if not emoji_id:
-                    continue
+            target_count = target_counts[idx]
+            generated_responses, generated_themes, generated_missing_voices = _generate_poll_responses(
+                sample=sample,
+                emoji_by_key=emoji_by_key,
+                rng=rng,
+                target_count=target_count,
+            )
 
+            for generated in generated_responses:
                 db.add(
                     Response(
                         poll_id=poll.id,
-                        emoji_id=emoji_id,
+                        emoji_id=generated["emoji_id"],
                         nickname=None,
-                        age_band=age_band,
-                        group_tag=group_tag,
-                        response_text=response_text,
+                        age_band=generated["age_band"],
+                        group_tag=generated["group_tag"],
+                        response_text=generated["response_text"],
                         follow_up_token=str(uuid4()),
                     )
                 )
+
+            sentiment_summary = deepcopy(sample["sentiment_summary"])
+            briefing = sentiment_summary.get("council_briefing")
+            if isinstance(briefing, dict):
+                briefing["executive_summary"] = (
+                    f"{briefing.get('executive_summary', '').strip()} "
+                    f"This consultation wave includes {target_count} responses."
+                ).strip()
+
+            themes_payload = {"themes": generated_themes}
+            conflicts_payload = deepcopy(sample["conflicting_viewpoints"])
 
             analysis = db.query(Analysis).filter(Analysis.poll_id == poll.id).first()
             if not analysis:
                 analysis = Analysis(
                     poll_id=poll.id,
-                    themes=sample["themes"],
-                    sentiment_summary=sample["sentiment_summary"],
-                    conflicting_viewpoints=sample["conflicting_viewpoints"],
-                    missing_voices=sample["missing_voices"],
+                    themes=themes_payload,
+                    sentiment_summary=sentiment_summary,
+                    conflicting_viewpoints=conflicts_payload,
+                    missing_voices=generated_missing_voices,
                 )
                 db.add(analysis)
             else:
-                analysis.themes = sample["themes"]
-                analysis.sentiment_summary = sample["sentiment_summary"]
-                analysis.conflicting_viewpoints = sample["conflicting_viewpoints"]
-                analysis.missing_voices = sample["missing_voices"]
+                analysis.themes = themes_payload
+                analysis.sentiment_summary = sentiment_summary
+                analysis.conflicting_viewpoints = conflicts_payload
+                analysis.missing_voices = generated_missing_voices
                 db.add(analysis)
 
         db.commit()
