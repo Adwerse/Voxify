@@ -57,7 +57,7 @@ def register(payload: AuthRegisterRequest, db: Session = Depends(get_db)) -> Aut
     if not verify_student_credentials(student_id=student_id, email=email):
         raise HTTPException(
             status_code=422,
-            detail="Verification failed. Use a valid TUS student ID and approved TUS email domain.",
+            detail="Verification failed. Use a valid TCD student ID and an approved Trinity email domain.",
         )
 
     student_hash = hash_identifier(student_id)

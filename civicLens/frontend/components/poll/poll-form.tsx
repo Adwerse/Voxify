@@ -292,7 +292,7 @@ export function PollForm({ pollId }: PollFormProps) {
               <input
                 value={studentId}
                 onChange={(e) => setStudentId(e.target.value.toUpperCase())}
-                placeholder="Student ID (e.g. TUS12345678)"
+                placeholder="Student ID (e.g. TCD12345678)"
                 className="w-full rounded-xl border border-zinc-200 p-3 text-sm uppercase"
               />
               <input

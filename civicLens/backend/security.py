@@ -79,10 +79,10 @@ def _fernet_instance() -> Fernet:
 
 
 _FERNET = _fernet_instance()
-_STUDENT_ID_PATTERN = re.compile(os.getenv("STUDENT_ID_REGEX", r"^TUS\d{8}$"), re.IGNORECASE)
+_STUDENT_ID_PATTERN = re.compile(os.getenv("STUDENT_ID_REGEX", r"^TCD\d{8}$"), re.IGNORECASE)
 _ALLOWED_EMAIL_DOMAINS = {
     domain.strip().lower()
-    for domain in (os.getenv("AUTH_ALLOWED_EMAIL_DOMAINS", "student.tus.ie,tus.ie") or "").split(",")
+    for domain in (os.getenv("AUTH_ALLOWED_EMAIL_DOMAINS", "student.tcd.ie,tcd.ie") or "").split(",")
     if domain.strip()
 }
 
