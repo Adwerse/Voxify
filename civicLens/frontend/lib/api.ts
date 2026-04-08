@@ -149,6 +149,61 @@ export type PollCreateResult = {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
 
+export class ApiError extends Error {
+  status: number;
+  detail: string;
+
+  constructor(status: number, detail: string) {
+    super(detail || "Request failed");
+    this.name = "ApiError";
+    this.status = status;
+    this.detail = detail || "Request failed";
+  }
+}
+
+function formatApiDetail(detail: unknown): string {
+  if (typeof detail === "string") {
+    return detail;
+  }
+
+  if (Array.isArray(detail)) {
+    const items = detail.map((item) => formatApiDetail(item)).filter((item) => item.length > 0);
+    return items.join("; ");
+  }
+
+  if (detail && typeof detail === "object") {
+    const record = detail as Record<string, unknown>;
+    const msg = typeof record.msg === "string" ? record.msg : "";
+    const loc = Array.isArray(record.loc)
+      ? record.loc.map((item) => String(item)).join(".")
+      : "";
+
+    if (msg && loc) {
+      return `${loc}: ${msg}`;
+    }
+
+    if (msg) {
+      return msg;
+    }
+
+    if (record.detail !== undefined) {
+      return formatApiDetail(record.detail);
+    }
+
+    try {
+      return JSON.stringify(record);
+    } catch {
+      return String(record);
+    }
+  }
+
+  if (detail === null || detail === undefined) {
+    return "";
+  }
+
+  return String(detail);
+}
+
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const headers = new Headers(init?.headers || undefined);
   if (init?.body && !headers.has("Content-Type")) {
@@ -156,14 +211,28 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   }
 
   const res = await fetch(`${API_BASE}${path}`, {
-    headers,
     ...init,
+    headers,
     cache: "no-store",
   });
 
   if (!res.ok) {
-    const text = await res.text();
-    throw new Error(text || "Request failed");
+    let detail = "Request failed";
+
+    try {
+      const json = await res.json();
+      const parsed = formatApiDetail(json?.detail ?? json?.message ?? json);
+      if (parsed) {
+        detail = parsed;
+      }
+    } catch {
+      const text = await res.text();
+      if (text) {
+        detail = text;
+      }
+    }
+
+    throw new ApiError(res.status, detail);
   }
 
   return (await res.json()) as T;

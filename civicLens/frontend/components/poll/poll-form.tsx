@@ -5,7 +5,7 @@ import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { Check, ChevronDown, Clock3, Copy, KeyRound } from "lucide-react";
 
 import { Card } from "@/components/ui/card";
-import { fetchAuthMe, fetchPoll, Poll, registerAnonymousIdentity, submitResponse } from "@/lib/api";
+import { ApiError, fetchAuthMe, fetchPoll, Poll, registerAnonymousIdentity, submitResponse } from "@/lib/api";
 import { useToast } from "@/lib/toast";
 
 type PollFormProps = {
@@ -103,7 +103,12 @@ export function PollForm({ pollId }: PollFormProps) {
           cohort: me.cohort || storedCohort,
         });
         setScreen("consent");
-      } catch {
+      } catch (err) {
+        const isAuthIssue = err instanceof ApiError && (err.status === 401 || err.status === 403 || err.status === 404);
+        if (!isAuthIssue && mounted) {
+          showToast("Could not validate saved session", "error");
+        }
+
         localStorage.removeItem(TOKEN_STORAGE_KEY);
         localStorage.removeItem(EMOJI_STORAGE_KEY);
         localStorage.removeItem(COHORT_STORAGE_KEY);
@@ -162,9 +167,10 @@ export function PollForm({ pollId }: PollFormProps) {
       setJustRegisteredEmoji(me.emoji_id);
       setScreen("consent");
       showToast(`You are now ${me.emoji_id} - verified`, "success");
-    } catch {
-      setAuthError("Verification failed. Use a valid TUS ID and approved TUS email domain.");
-      showToast("Verification failed", "error");
+    } catch (err) {
+      const message = err instanceof ApiError ? err.detail : "Verification failed. Please try again.";
+      setAuthError(message);
+      showToast(message, "error");
     } finally {
       setRegistering(false);
     }
@@ -193,14 +199,20 @@ export function PollForm({ pollId }: PollFormProps) {
       setToken(result.follow_up_token);
       setScreen("thankyou");
       showToast("Response submitted", "success");
-    } catch {
-      localStorage.removeItem(TOKEN_STORAGE_KEY);
-      localStorage.removeItem(EMOJI_STORAGE_KEY);
-      localStorage.removeItem(COHORT_STORAGE_KEY);
-      setIdentitySession(null);
-      setScreen("identity");
-      setError("Your session expired. Re-verify your anonymous identity to submit.");
-      showToast("Session expired. Please verify again.", "error");
+    } catch (err) {
+      if (err instanceof ApiError && (err.status === 401 || err.status === 403)) {
+        localStorage.removeItem(TOKEN_STORAGE_KEY);
+        localStorage.removeItem(EMOJI_STORAGE_KEY);
+        localStorage.removeItem(COHORT_STORAGE_KEY);
+        setIdentitySession(null);
+        setScreen("identity");
+        setError("Your session expired. Re-verify your anonymous identity to submit.");
+        showToast(err.detail || "Session expired. Please verify again.", "error");
+      } else {
+        const message = err instanceof ApiError ? err.detail : "Could not submit your response. Please try again.";
+        setError(message);
+        showToast(message, "error");
+      }
     } finally {
       setSubmitting(false);
     }
