@@ -1,0 +1,108 @@
+.card {
+  display: grid;
+  gap: 1rem;
+  border: 1px solid #d6dbe4;
+  border-radius: 1rem;
+  background: #ffffff;
+  padding: 1.25rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #0f172a;
+}
+
+.helpText {
+  margin: 0;
+  color: #475569;
+}
+
+.form {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.fieldLabel {
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.fieldInput,
+.fieldTextarea {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  padding: 0.7rem 0.85rem;
+  font: inherit;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+.fieldInput:focus,
+.fieldTextarea:focus {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+  background: #ffffff;
+}
+
+.checkboxRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.primaryButton {
+  border: 0;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, #2563eb, #0ea5e9);
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+}
+
+.primaryButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.errorText {
+  margin: 0;
+  color: #b91c1c;
+  font-weight: 600;
+}
+
+.successCard {
+  border: 1px solid #bbf7d0;
+  background: #f0fdf4;
+  border-radius: 0.75rem;
+  padding: 0.9rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.successTitle {
+  margin: 0;
+  color: #166534;
+  font-weight: 700;
+}
+
+.successText {
+  margin: 0;
+  color: #15803d;
+}
+
+.secondaryAction {
+  justify-self: start;
+  text-decoration: none;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.secondaryAction:hover {
+  text-decoration: underline;
+}

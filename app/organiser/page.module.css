@@ -1,0 +1,251 @@
+.page {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* ─── Header ────────────────────────────────────────────────────────────────── */
+
+.headerCard {
+  border: 1px solid #d8dfec;
+  border-radius: 16px;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #f5f8ff 0%, #ffffff 100%);
+}
+
+.eyebrow {
+  color: #1b69d2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: #18263a;
+  letter-spacing: -0.01em;
+}
+
+.description {
+  margin-top: 0.5rem;
+  color: #425369;
+  line-height: 1.55;
+  font-size: 0.95rem;
+}
+
+/* ─── Consultation list ─────────────────────────────────────────────────────── */
+
+.listSection {
+  display: grid;
+  gap: 1rem;
+}
+
+.consultationCard {
+  border: 1px solid #d8dfec;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 1.35rem;
+  display: grid;
+  gap: 1rem;
+  transition: box-shadow 0.2s;
+}
+
+.consultationCard:hover {
+  box-shadow: 0 6px 20px rgba(27, 105, 210, 0.07);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  align-items: flex-start;
+}
+
+.consultationTitle {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #17263c;
+}
+
+.consultationDescription {
+  margin-top: 0.35rem;
+  color: #4a5c76;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.statusTag {
+  height: fit-content;
+  padding: 0.24rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+.statusTag[data-status="open"] {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.statusTag[data-status="closed"] {
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.statusTag[data-status="draft"] {
+  background: #fef9c3;
+  color: #854d0e;
+}
+
+/* ─── Pipeline progress ─────────────────────────────────────────────────────── */
+
+.pipelineRow {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  overflow-x: auto;
+  padding: 0.25rem 0;
+}
+
+.pipelineStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  flex-shrink: 0;
+}
+
+.stepDot {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: #f0f4fa;
+  color: #7a8fa8;
+  border: 2px solid #d8dfec;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.stepLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #7a8fa8;
+  white-space: nowrap;
+  transition: color 0.2s;
+}
+
+.stepDone .stepDot {
+  background: #1b69d2;
+  border-color: #1b69d2;
+  color: #ffffff;
+}
+
+.stepDone .stepLabel {
+  color: #1b69d2;
+}
+
+.pipelineConnector {
+  flex: 1;
+  height: 2px;
+  min-width: 1.5rem;
+  max-width: 4rem;
+  background: #d8dfec;
+  margin-bottom: 1.35rem;
+  transition: background 0.2s;
+}
+
+.connectorDone {
+  background: #1b69d2;
+}
+
+/* ─── Stats ─────────────────────────────────────────────────────────────────── */
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+}
+
+.statItem {
+  background: #f8fbff;
+  border: 1px solid #e8edf5;
+  border-radius: 10px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.87rem;
+  color: #24364f;
+}
+
+.statLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #607089;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: block;
+  margin-bottom: 0.2rem;
+}
+
+.statValue {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1b2f4a;
+}
+
+/* ─── Actions ───────────────────────────────────────────────────────────────── */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.secondaryAction {
+  border: 1px solid #c7d3e7;
+  border-radius: 10px;
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #1f3553;
+  background: #f8fbff;
+  transition: background 0.15s;
+}
+
+.secondaryAction:hover {
+  background: #eef5ff;
+}
+
+/* ─── Empty state ───────────────────────────────────────────────────────────── */
+
+.emptyCard {
+  border: 1px dashed #c8d4e8;
+  border-radius: 16px;
+  background: #fbfcff;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.emptyTitle {
+  margin: 0;
+  color: #1f314a;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.emptyText {
+  margin-top: 0.5rem;
+  color: #4e6078;
+  font-size: 0.95rem;
+}

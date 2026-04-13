@@ -1,0 +1,58 @@
+[
+  {
+    "id": "campus-wellbeing-spring-2026",
+    "title": "Campus Wellbeing and Support",
+    "description": "Share what would most improve wellbeing support for students this term.",
+    "status": "open",
+    "questions": [
+      "What is one change that would most improve your day-to-day wellbeing at campus?",
+      "What currently makes it difficult for you to access support?"
+    ],
+    "createdAt": "2026-03-01T08:00:00.000Z"
+  },
+  {
+    "id": "student-transport-spring-2026",
+    "title": "Student Transport & Commuter Experience",
+    "description": "Help us understand how commuting affects your studies and what changes would make the biggest difference.",
+    "status": "open",
+    "questions": [
+      "What is your biggest challenge with getting to and from campus?",
+      "What one transport or commuting improvement would most benefit your studies?"
+    ],
+    "createdAt": "2026-03-05T09:00:00.000Z"
+  },
+  {
+    "id": "campus-food-sustainability-2026",
+    "title": "Campus Food & Sustainability",
+    "description": "Tell us what changes to campus food services and sustainability practices matter most to you.",
+    "status": "open",
+    "questions": [
+      "What do you find most difficult about accessing food on campus?",
+      "What food service or sustainability change would make the biggest difference to you?"
+    ],
+    "createdAt": "2026-03-10T09:00:00.000Z"
+  },
+  {
+    "id": "digital-learning-winter-2025",
+    "title": "Digital Learning & Technology Access",
+    "description": "We want to understand how technology and digital tools support or hinder your learning experience.",
+    "status": "closed",
+    "questions": [
+      "What technology or digital access issue affects your studies most?",
+      "What digital tool or infrastructure improvement would help you most?"
+    ],
+    "createdAt": "2025-11-15T09:00:00.000Z",
+    "closedAt": "2026-01-20T17:00:00.000Z"
+  },
+  {
+    "id": "student-union-facilities-2026",
+    "title": "Student Union Facilities Review",
+    "description": "Share your views on current Student Union spaces and services to help shape our 2026–27 facilities plan.",
+    "status": "open",
+    "questions": [
+      "Which Student Union facility or service is most in need of improvement?",
+      "What new facility or service would you most like the Student Union to provide?"
+    ],
+    "createdAt": "2026-02-20T09:00:00.000Z"
+  }
+]

@@ -1,0 +1,490 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem 3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+/* ─── Header card ───────────────────────────────────────────────────────────── */
+
+.headerCard {
+  border: 1px solid #d8dfec;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #f5f8ff 0%, #ffffff 100%);
+  padding: 1.5rem;
+}
+
+.eyebrow {
+  color: #1b69d2;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  color: #18263a;
+  font-size: 1.6rem;
+  font-weight: 700;
+}
+
+.description {
+  margin-top: 0.5rem;
+  color: #425369;
+  line-height: 1.5;
+}
+
+.topActions {
+  margin-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  align-items: center;
+}
+
+.backLink {
+  border: 1px solid #c7d3e7;
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1f3553;
+  background: #f8fbff;
+  transition: background 0.15s;
+}
+
+.backLink:hover {
+  background: #edf2fb;
+}
+
+/* ─── Stats strip ───────────────────────────────────────────────────────────── */
+
+.statsStrip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  background: #ffffff;
+  border: 1px solid #d8dfec;
+  border-radius: 14px;
+  padding: 0.85rem 1.25rem;
+}
+
+.statsItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.25rem 1.25rem 0.25rem 0;
+}
+
+.statsValue {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #17263c;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.statsLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #607089;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.statsDivider {
+  width: 1px;
+  height: 2.5rem;
+  background: #d8dfec;
+  margin: 0 1.25rem 0 0;
+  flex-shrink: 0;
+}
+
+/* ─── Section cards ─────────────────────────────────────────────────────────── */
+
+.sectionCard {
+  border: 1px solid #d8dfec;
+  border-radius: 16px;
+  background: #ffffff;
+  padding: 1.5rem;
+}
+
+.emptyState {
+  border: 1px dashed #c8d4e8;
+  border-radius: 16px;
+  background: #fafcff;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.sectionTitle {
+  margin: 0 0 0.75rem;
+  color: #18263a;
+  font-size: 1.15rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.sectionIcon {
+  font-size: 1.1rem;
+}
+
+.sectionSubtext {
+  margin: -0.25rem 0 1rem;
+  color: #4a5c76;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.subheading {
+  margin: 0 0 0.65rem;
+  color: #23364f;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Theme cards grid ──────────────────────────────────────────────────────── */
+
+.themesGrid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.themeCard {
+  border: 1px solid #dde4f0;
+  border-left: 4px solid var(--theme-accent, #1b69d2);
+  border-radius: 12px;
+  padding: 1rem;
+  background: #f9fbff;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.themeLabel {
+  margin: 0;
+  font-size: 0.97rem;
+  font-weight: 700;
+  color: #1b2f4a;
+}
+
+.themeDescription {
+  margin: 0;
+  font-size: 0.87rem;
+  color: #475a74;
+  line-height: 1.45;
+  flex: 1;
+}
+
+.themeFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.4rem;
+}
+
+.themeCount {
+  display: inline-flex;
+  align-items: center;
+  background: #e8effc;
+  color: #1a4d99;
+  border-radius: 999px;
+  font-size: 0.77rem;
+  font-weight: 700;
+  padding: 0.18rem 0.6rem;
+}
+
+.themeShare {
+  font-size: 0.77rem;
+  font-weight: 700;
+  color: var(--theme-accent, #1b69d2);
+}
+
+.themeBar {
+  height: 4px;
+  background: #e4ebf7;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+
+.themeBarFill {
+  height: 100%;
+  background: var(--theme-accent, #1b69d2);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* ─── Table ─────────────────────────────────────────────────────────────────── */
+
+.tableWrap {
+  overflow-x: auto;
+  margin-top: 1.25rem;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 520px;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid #e2e8f2;
+  padding: 0.6rem 0.75rem;
+  color: #21354e;
+  font-size: 0.9rem;
+}
+
+.table th {
+  color: #30435e;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: #f5f8ff;
+}
+
+/* ─── Conflicting viewpoints ────────────────────────────────────────────────── */
+
+.conflictsGrid {
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.conflictCard {
+  border: 1px solid #f0d3e8;
+  border-radius: 14px;
+  padding: 1rem;
+  background: #fff9fc;
+}
+
+.conflictTitle {
+  margin: 0 0 0.7rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #4a1a34;
+}
+
+.cluster {
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid #f0d3e8;
+}
+
+.cluster:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+.clusterLabel {
+  margin: 0 0 0.45rem;
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: #6b2549;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.quoteList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.quoteList li {
+  padding: 0.4rem 0.75rem;
+  border-left: 3px solid #e8a8c8;
+  background: #fff2f8;
+  color: #4a2840;
+  font-size: 0.87rem;
+  line-height: 1.5;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+}
+
+/* ─── Alerts ────────────────────────────────────────────────────────────────── */
+
+.alertSection {
+  margin-top: 1.25rem;
+}
+
+.alertList {
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+  padding: 0;
+  margin: 0;
+}
+
+.alertItem {
+  border: 1px solid #f0d3a1;
+  border-radius: 12px;
+  background: #fff8ec;
+  padding: 1rem 1.1rem;
+  color: #543f22;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.alertHeader {
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.alertIcon {
+  font-size: 1rem;
+}
+
+/* Visual comparison bars */
+.alertBars {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.alertBarRow {
+  display: grid;
+  grid-template-columns: 5rem 1fr 3rem;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.alertBarLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #7a5a30;
+  text-align: right;
+}
+
+.alertBarTrack {
+  height: 8px;
+  background: #fde6b0;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.alertBarExpected {
+  height: 100%;
+  background: #1b69d2;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.alertBarActual {
+  height: 100%;
+  background: #e07a10;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.alertBarValue {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #543f22;
+}
+
+.alertMessage {
+  margin: 0;
+  font-size: 0.87rem;
+  color: #6b5030;
+  line-height: 1.5;
+}
+
+/* ─── Equity narrative ──────────────────────────────────────────────────────── */
+
+.narrativeSection {
+  margin-top: 1.25rem;
+  border: 1px solid #dce5f3;
+  border-radius: 14px;
+  padding: 1.1rem 1.2rem;
+  background: #f9fbff;
+}
+
+.narrativeTitle {
+  margin: 0 0 0.75rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1b3a6b;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Bottom CTA ────────────────────────────────────────────────────────────── */
+
+.ctaSection {
+  border: 1px solid #c7d9f7;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eef5ff 0%, #f8fbff 100%);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.ctaContent {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.ctaTitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #18263a;
+}
+
+.ctaText {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #425369;
+  line-height: 1.5;
+  max-width: 480px;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  background: #1b69d2;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.92rem;
+  white-space: nowrap;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.ctaButton:hover {
+  background: #1558b4;
+  box-shadow: 0 4px 12px rgba(27, 105, 210, 0.3);
+}
+
+/* ─── Muted text ────────────────────────────────────────────────────────────── */
+
+.muted {
+  margin: 0;
+  color: #4d5f78;
+  line-height: 1.5;
+}

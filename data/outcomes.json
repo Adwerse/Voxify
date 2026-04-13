@@ -1,0 +1,16 @@
+[
+  {
+    "consultationId": "campus-wellbeing-spring-2026",
+    "decisionTitle": "Extend counselling hours",
+    "decisionDescription": "Evening sessions launched for an 8-week pilot.",
+    "influencedByInput": true,
+    "organiserExplanation": "Recurring student feedback highlighted access barriers during daytime slots."
+  },
+  {
+    "consultationId": "digital-learning-winter-2025",
+    "decisionTitle": "Student Device Lending Library",
+    "decisionDescription": "A laptop loan scheme was launched in February 2026, with 40 devices available for up to 2-week borrowing periods. Extended VPN access has also been confirmed for all enrolled students through the end of the academic year.",
+    "influencedByInput": true,
+    "organiserExplanation": "Student responses consistently identified device access and off-campus connectivity as the top barriers to remote learning. The loan scheme and VPN extension directly address the most-cited issues. Lecture recording retention has been extended to 12 weeks following feedback about revision access."
+  }
+]

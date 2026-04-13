@@ -1,0 +1,138 @@
+.page {
+  min-height: calc(100vh - 4.5rem);
+  padding: 2rem 1rem 3rem;
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  gap: 1rem;
+}
+
+.headerCard,
+.sectionCard {
+  border: 1px solid #d6dbe4;
+  border-radius: 1rem;
+  background: #ffffff;
+  padding: 1.2rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.07);
+}
+
+.headerCard {
+  background: #f8fafc;
+}
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #1d4ed8;
+}
+
+.title {
+  margin: 0.3rem 0 0;
+  font-size: clamp(1.45rem, 2.8vw, 2rem);
+  color: #0f172a;
+}
+
+.description {
+  margin: 0.6rem 0 0;
+  color: #475569;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #0f172a;
+}
+
+.summaryText {
+  margin: 0.75rem 0 0;
+  color: #334155;
+}
+
+.bulletList {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+  color: #334155;
+}
+
+.mutedText {
+  margin: 0.7rem 0 0;
+  color: #64748b;
+}
+
+.themeGrid {
+  margin-top: 0.85rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.7rem;
+}
+
+.themeCard {
+  border: 1px solid #dbe3ef;
+  border-radius: 0.75rem;
+  padding: 0.8rem;
+  background: #f8fafc;
+}
+
+.themeLabel {
+  margin: 0;
+  color: #0f172a;
+  font-size: 1rem;
+}
+
+.themeDescription {
+  margin: 0.45rem 0 0;
+  color: #475569;
+}
+
+.outcomeTitle {
+  margin: 0.8rem 0 0;
+  color: #0f172a;
+}
+
+.outcomeDescription,
+.explanation {
+  margin: 0.5rem 0 0;
+  color: #334155;
+}
+
+.influenceTag {
+  margin: 0.65rem 0 0;
+  color: #1e3a8a;
+  font-weight: 600;
+}
+
+.splitGrid {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0.75rem;
+}
+
+.splitCard {
+  border: 1px solid #dbe3ef;
+  border-radius: 0.75rem;
+  padding: 0.8rem;
+  background: #f8fafc;
+}
+
+.splitHeading {
+  margin: 0;
+  color: #0f172a;
+}
+
+.footerActions {
+  display: flex;
+}
+
+.backLink {
+  text-decoration: none;
+  color: #1d4ed8;
+  font-weight: 600;
+}
+
+.backLink:hover {
+  text-decoration: underline;
+}

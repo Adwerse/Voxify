@@ -1,0 +1,65 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem 1rem;
+  background: #f8fafc;
+}
+
+.card {
+  width: min(700px, 100%);
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.5rem;
+  box-shadow: 0 18px 45px -30px rgba(15, 23, 42, 0.28);
+}
+
+.title {
+  margin: 0;
+  color: #0f172a;
+}
+
+.description {
+  margin-top: 0.7rem;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.note {
+  margin-top: 1rem;
+  color: #334155;
+}
+
+.code {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 0.15rem 0.35rem;
+  color: #0f172a;
+}
+
+.actions {
+  margin-top: 1.25rem;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.primaryButton,
+.secondaryButton {
+  text-decoration: none;
+  border-radius: 10px;
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+}
+
+.primaryButton {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.secondaryButton {
+  border: 1px solid #cbd5e1;
+  color: #0f172a;
+}
